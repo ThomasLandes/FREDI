@@ -1,0 +1,48 @@
+@charset "utf-8";
+/* Template CSS */
+
+table, th, td {
+  border-style: solid;
+  border-width: 1px;
+  border-color: black;
+  border-collapse: collapse;
+}
+
+body {
+  margin-left:20px;
+  font-family: Verdana, Geneva, sans-serif;
+}
+
+div#content {
+  width: 990px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+th,td {
+  font-family: Verdana, Geneva, sans-serif;
+  font-size : 14px;
+  padding: 5px;
+  text-align:center;
+}
+
+th {
+   background-color: grey;
+   color: white; 
+}
+
+td {
+   background-color: white;
+   color: black;
+}
+
+tr:nth-child(odd) {
+  background-color: lightgrey;
+}
+tr:nth-child(even) {
+  background-color: white;
+}
+
+.erreur {
+  color : red;
+}
