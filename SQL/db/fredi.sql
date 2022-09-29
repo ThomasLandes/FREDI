@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : jeu. 29 sep. 2022 à 15:48
+-- Généré le : jeu. 29 sep. 2022 à 17:02
 -- Version du serveur : 10.4.20-MariaDB
 -- Version de PHP : 7.4.22
 
@@ -34,7 +34,7 @@ CREATE TABLE `adherent` (
   `adresse1` varchar(50) NOT NULL,
   `adresse2` varchar(50) NOT NULL,
   `adresse3` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -49,7 +49,7 @@ CREATE TABLE `club` (
   `cpClub` int(11) NOT NULL,
   `villeClub` varchar(50) NOT NULL,
   `idligue` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -69,7 +69,7 @@ CREATE TABLE `lignefrais` (
   `montantTot` decimal(10,0) NOT NULL,
   `id_note` int(11) NOT NULL,
   `id_motif` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -80,7 +80,7 @@ CREATE TABLE `lignefrais` (
 CREATE TABLE `ligues` (
   `idligue` int(11) NOT NULL,
   `nomligue` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -91,7 +91,7 @@ CREATE TABLE `ligues` (
 CREATE TABLE `motif` (
   `id_motif` int(11) NOT NULL,
   `description` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -106,7 +106,7 @@ CREATE TABLE `notefrais` (
   `dateNote` date NOT NULL,
   `numOrdre` int(11) NOT NULL,
   `idadherent` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -119,7 +119,7 @@ CREATE TABLE `periodef` (
   `libelleperiode` int(11) NOT NULL,
   `montant` decimal(10,0) NOT NULL,
   `id_note` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -146,7 +146,7 @@ CREATE TABLE `utilisateur` (
   `adresse2_adherent` varchar(50) NOT NULL,
   `adresse3_adherent` varchar(50) NOT NULL,
   `idligue` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Index pour les tables déchargées
