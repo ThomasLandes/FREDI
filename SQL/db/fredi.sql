@@ -1,4 +1,4 @@
-CREATE DATABESE FREDI DEFAULT CHARSET=utf8 COLLATE utf8_general_ci ;
+CREATE DATABASE FREDI DEFAULT CHARSET=utf8 COLLATE utf8_general_ci ;
 
 USE FREDI ;
 
@@ -27,130 +27,141 @@ SET time_zone = "+00:00";
 
 -- --------------------------------------------------------
 
---
--- Structure de la table `adherent`
---
+-------------------------------------------------------------
+--       Script MySQL.
+-------------------------------------------------------------
+-
+-
+-------------------------------------------------------------
+-- Table: Ligues 
+-------------------------------------------------------------
 
-CREATE TABLE `adherent` (
-  `idadherent` int(11) NOT NULL,
-  `clubad` varchar(50) NOT NULL,
-  `numlicencead` float NOT NULL,
-  `adresse1` varchar(50) NOT NULL,
-  `adresse2` varchar(50) NOT NULL,
-  `adresse3` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE Ligues(
+        idligue  Int  Auto_increment  NOT NULL ,
+        nomligue Varchar (50) NOT NULL
+	,CONSTRAINT Ligues_PK PRIMARY KEY (idligue)
+)ENGINE=InnoDB;
 
--- --------------------------------------------------------
 
---
--- Structure de la table `club`
---
+-------------------------------------------------------------
+-- Table: club
+-------------------------------------------------------------
 
-CREATE TABLE `club` (
-  `idclub` int(11) NOT NULL,
-  `nomclub` varchar(50) NOT NULL,
-  `adresseclub` varchar(50) NOT NULL,
-  `cpClub` int(11) NOT NULL,
-  `villeClub` varchar(50) NOT NULL,
-  `idligue` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE club(
+        idclub      Int  Auto_increment  NOT NULL ,
+        nomclub     Varchar (50) NOT NULL ,
+        adresseclub Varchar (50) NOT NULL ,
+        cpClub      Int NOT NULL ,
+        villeClub   Varchar (50) NOT NULL ,
+        idligue     Int NOT NULL
+	,CONSTRAINT club_PK PRIMARY KEY (idclub)
 
--- --------------------------------------------------------
+	,CONSTRAINT club_Ligues_FK FOREIGN KEY (idligue) REFERENCES Ligues(idligue)
+)ENGINE=InnoDB;
 
---
--- Structure de la table `lignefrais`
---
 
-CREATE TABLE `lignefrais` (
-  `idlgine` int(11) NOT NULL,
-  `datedeplacement` date NOT NULL,
-  `libDeplacement` varchar(50) NOT NULL,
-  `motifDeplacemt` varchar(50) NOT NULL,
-  `kilometrage` int(11) NOT NULL,
-  `fraisPeage` decimal(10,0) NOT NULL,
-  `fraisRepas` decimal(50,0) NOT NULL,
-  `fraisHeberge` decimal(10,0) NOT NULL,
-  `montantTot` decimal(10,0) NOT NULL,
-  `id_note` int(11) NOT NULL,
-  `id_motif` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+-------------------------------------------------------------
+-- Table: utilisateur
+-------------------------------------------------------------
 
--- --------------------------------------------------------
+CREATE TABLE utilisateur(
+        idutil     Int  Auto_increment  NOT NULL ,
+        pseudoutil Varchar (50) NOT NULL ,
+        mdputil    Varchar (50) NOT NULL ,
+        nomutil    Varchar (50) NOT NULL ,
+        prenomutil Varchar (50) NOT NULL ,
+        mailutil   Varchar (50) NOT NULL ,
+        typeutil   Varchar (50) NOT NULL ,
+        idligue    Int NOT NULL
+	,CONSTRAINT utilisateur_PK PRIMARY KEY (idutil)
 
---
--- Structure de la table `ligues`
---
+	,CONSTRAINT utilisateur_Ligues_FK FOREIGN KEY (idligue) REFERENCES Ligues(idligue)
+)ENGINE=InnoDB;
 
-CREATE TABLE `ligues` (
-  `idligue` int(11) NOT NULL,
-  `nomligue` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
+-------------------------------------------------------------
+-- Table: adherent
+-------------------------------------------------------------
 
---
--- Structure de la table `motif`
---
+CREATE TABLE adherent(
+        idadherent   Int  Auto_increment  NOT NULL ,
+        clubad       Varchar (50) NOT NULL ,
+        numlicencead Float NOT NULL ,
+        adresse1     Varchar (50) NOT NULL ,
+        adresse2     Varchar (50) NOT NULL ,
+        adresse3     Varchar (50) NOT NULL ,
+        idclub       Int NOT NULL ,
+        idutil       Int NOT NULL
+	,CONSTRAINT adherent_PK PRIMARY KEY (idadherent)
 
-CREATE TABLE `motif` (
-  `id_motif` int(11) NOT NULL,
-  `description` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+	,CONSTRAINT adherent_club_FK FOREIGN KEY (idclub) REFERENCES club(idclub)
+	,CONSTRAINT adherent_utilisateur0_FK FOREIGN KEY (idutil) REFERENCES utilisateur(idutil)
+)ENGINE=InnoDB;
 
--- --------------------------------------------------------
 
---
--- Structure de la table `notefrais`
---
+-------------------------------------------------------------
+-- Table: NoteFrais
+-------------------------------------------------------------
 
-CREATE TABLE `notefrais` (
-  `id_note` int(11) NOT NULL,
-  `validite` tinyint(1) NOT NULL,
-  `montantTot` decimal(10,0) NOT NULL,
-  `dateNote` date NOT NULL,
-  `numOrdre` int(11) NOT NULL,
-  `idadherent` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE NoteFrais(
+        id_note    Int  Auto_increment  NOT NULL ,
+        validite   Bool NOT NULL ,
+        montantTot Float NOT NULL ,
+        dateNote   Date NOT NULL ,
+        numOrdre   Int NOT NULL ,
+        idutil     Int NOT NULL
+	,CONSTRAINT NoteFrais_PK PRIMARY KEY (id_note)
 
--- --------------------------------------------------------
+	,CONSTRAINT NoteFrais_utilisateur_FK FOREIGN KEY (idutil) REFERENCES utilisateur(idutil)
+)ENGINE=InnoDB;
 
---
--- Structure de la table `periodef`
---
 
-CREATE TABLE `periodef` (
-  `idperiode` int(11) NOT NULL,
-  `libelleperiode` int(11) NOT NULL,
-  `montant` decimal(10,0) NOT NULL,
-  `id_note` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+------------------------------------------------------------
+-- Table: PeriodeF
+------------------------------------------------------------
 
--- --------------------------------------------------------
+CREATE TABLE PeriodeF(
+        idperiode      Int  Auto_increment  NOT NULL ,
+        libelleperiode Int NOT NULL ,
+        montant        Float NOT NULL ,
+        id_note        Int NOT NULL
+	,CONSTRAINT PeriodeF_PK PRIMARY KEY (idperiode)
 
---
--- Structure de la table `utilisateur`
---
+	,CONSTRAINT PeriodeF_NoteFrais_FK FOREIGN KEY (id_note) REFERENCES NoteFrais(id_note)
+)ENGINE=InnoDB;
 
-CREATE TABLE `utilisateur` (
-  `idadherent` int(11) NOT NULL,
-  `idutil` int(11) NOT NULL,
-  `pseudoutil` varchar(50) NOT NULL,
-  `mdputil` varchar(50) NOT NULL,
-  `nomutil` varchar(50) NOT NULL,
-  `prenomutil` varchar(50) NOT NULL,
-  `mailutil` varchar(50) NOT NULL,
-  `typeutil` varchar(50) NOT NULL,
-  `numLicence` int(11) NOT NULL,
-  `adresse1` varchar(50) NOT NULL,
-  `adresse2` varchar(50) NOT NULL,
-  `adresse3` varchar(50) NOT NULL,
-  `clubad` varchar(50) NOT NULL,
-  `numlicencead` float NOT NULL,
-  `adresse1_adherent` varchar(50) NOT NULL,
-  `adresse2_adherent` varchar(50) NOT NULL,
-  `adresse3_adherent` varchar(50) NOT NULL,
-  `idligue` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-------------------------------------------------------------
+-- Table: Motif
+-------------------------------------------------------------
+
+CREATE TABLE Motif(
+        id_motif Int  Auto_increment  NOT NULL ,
+        libmotif Varchar (50) NOT NULL
+	,CONSTRAINT Motif_PK PRIMARY KEY (id_motif)
+)ENGINE=InnoDB;
+
+
+-------------------------------------------------------------
+-- Table: ligneFrais
+-------------------------------------------------------------
+
+CREATE TABLE ligneFrais(
+        idligne         Int  Auto_increment  NOT NULL ,
+        datedeplacement Date NOT NULL ,
+        libDeplacement  Varchar (50) NOT NULL ,
+        kilometrage     Int NOT NULL ,
+        fraisPeage      Float NOT NULL ,
+        fraisRepas      Float NOT NULL ,
+        fraisHeberge    Float NOT NULL ,
+        montantTot      Float NOT NULL ,
+        id_note         Int NOT NULL ,
+        id_motif        Int NOT NULL
+	,CONSTRAINT ligneFrais_PK PRIMARY KEY (idligne)
+
+	,CONSTRAINT ligneFrais_NoteFrais_FK FOREIGN KEY (id_note) REFERENCES NoteFrais(id_note)
+	,CONSTRAINT ligneFrais_Motif0_FK FOREIGN KEY (id_motif) REFERENCES Motif(id_motif)
+)ENGINE=InnoDB;
 
 --
 -- Index pour les tables déchargées
