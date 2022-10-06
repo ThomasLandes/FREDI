@@ -146,3 +146,15 @@ function contains_uppercase(string $field) {
 function contains_special(string $field) {
   return preg_match("#[\W]#",$field);
 }
+
+/**
+ * Permet la création de log de connexion/deconnexion
+ */
+function connection_log($info,$action)
+{
+    $logfile ='../../htaccess/.htaccess/connection_log.txt';
+    $date = date('D, d-m-y h:i:s');
+    $logopen=(fopen("$logfile",'a'));
+    fwrite($logopen,$date." ".$action." ".$info."\r\n");
+    fclose($logopen);
+}
