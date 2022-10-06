@@ -1,11 +1,15 @@
 <?php
-include "fonctions/db.php"; //connexion à la BDD
+
+include 'fonctions/fonction.php';
+
 $dbh = db_connect();
 
 $pseudo = isset($_POST['pseudo']) ? $_POST['pseudo'] : '';
+$nom = isset($_POST['nom']) ? $_POST['nom'] : '';
+$prenom = isset($_POST['prenom']) ? $_POST['prenom'] : '';
 $mdpuncrypt = isset($_POST['mdp']) ? $_POST['mdp'] : '';
 $idligue = isset($_POST['idligue']) ? $_POST['idligue'] : '';
-$idtype = isset($_POST['idtype']) ? $_POST['idtype'] : '';
+$typeutil = isset($_POST['idtype']) ? $_POST['idtype'] : '';
 $mail = isset($_POST['mail']) ? $_POST['mail'] : '';
 $mdp = password_hash($mdpuncrypt, PASSWORD_BCRYPT);
 
@@ -14,9 +18,9 @@ $submit = isset($_POST['submit']);
 // Ajout dans la base
 if ($submit) {
 
-    $check = 'select * from utilisateur where mail =:mail';
+    $check = 'select * from utilisateur where mailutil =:mailutil';
     $checkparams = array( 
-        ":mail" => $mail,
+        ":mailutil" => $mail
     );
     try {
         $sth0 = $dbh->prepare($check);
@@ -30,13 +34,18 @@ if ($submit) {
         $message = "Un compte est déjà relié à ce mail";
     } 
     else {
-        $sql = "INSERT INTO utilisateur(pseudo, mdp, idligue, idtype, mail) VALUES (:pseudo, :mdp, :idligue, :idtype, :mail)";
+    
+
+        $sql = "INSERT INTO utilisateur(pseudoutil, mdputil,nomutil,prenomutil, typeutil, mailutil) VALUES (:pseudoutil, :mdputil,:nomutil,:prenomutil,:mailutil, :typeutil, :idligue )";
         $params = array(
-            ":pseudo" => $pseudo,
-            ":mdp" => $mdp,
-            ":idligue" => $idligue,
-            ":idtype" => $idtype,
-            ":mail" => $mail,
+            ":pseudoutil" => $pseudo,
+            ":mdputil" => $mdp,
+            "nomutil" => $nom,
+            ":prenomutil" => $prenom,
+            ":mailutil" => $mail,
+            ":typeutil" => $typeutil,
+            ":idligue" => $idligue
+            
         );
         try {
             $sth = $dbh->prepare($sql);
@@ -77,6 +86,8 @@ if ($submit) {
             <div class="login">
                 <form class="login-container" method="POST">
                     <p><input type="username" name="pseudo" placeholder="Nom utilisateur" required></p>
+                    <p><input type="text" name="nom" placeolder="Nom" require></p>
+                    <p><input type="text" name="prenom" placeolder="Prenom" require></p>
                     <p><input type="email" name="mail" placeholder="Email" required></p>
                     <p><input type="password" name="mdp" placeholder="Mot de passe" required></p>
                     <p> <input type="hidden" name="idtype" value="1"> </p>
