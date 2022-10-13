@@ -1,6 +1,6 @@
 <?php
 session_start();
-include "fonctions/db.php"; //connexion à la BDD
+include "fonctions/fonction.php"; //connexion à la BDD
 $dbh = db_connect();
 
 $mail = isset($_POST['mail']) ? $_POST['mail'] : '';

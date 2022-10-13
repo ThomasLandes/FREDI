@@ -18,46 +18,47 @@ $submit = isset($_POST['submit']);
 // Ajout dans la base
 if ($submit) {
 
-    $check = 'select * from utilisateur where mailutil =:mailutil';
-    $checkparams = array( 
-        ":mailutil" => $mail
-    );
+    $check = 'select * from utilisateur where mailutil =:mailutil and pseudoutil = :pseudo';
+    $checkparams = array(":mailutil" => $mail, ":pseudo" => $pseudo);
     try {
         $sth0 = $dbh->prepare($check);
         $sth0->execute($checkparams);
-        $nbcheck = $sth0->rowcount();
+        $nbresult = $sth0->rowcount();
     } catch (PDOException $e) {
         die("<p>Erreur lors de la requête SQL : " . $e->getMessage() . "</p>");
     }
 
-    if ($nbcheck > 0) {
-        $message = "Un compte est déjà relié à ce mail";
-    } 
-    else {
-    
+    if ($nbresult > 0) {
+        $message = "Un compte est déjà relié à ce mail ou ce pseudo";
+        die("<p>Erreur : " . $message . "</p>");
+    } else {
+        if ( min_length($mdpuncrypt, 8) && contains_num($mdpuncrypt) && contains_lowercase($mdpuncrypt) && contains_uppercase($mdpuncrypt) && contains_special($mdpuncrypt)) {
+            $sql = "INSERT INTO utilisateur(pseudoutil, mdputil,nomutil,prenomutil, typeutil, mailutil, idligue) VALUES (:pseudoutil, :mdputil,:nomutil,:prenomutil,:typeutil , :mailutil, :idligue )";
+            $params = array(
+                ":pseudoutil" => $pseudo,
+                ":mdputil" => $mdp,
+                "nomutil" => $nom,
+                ":prenomutil" => $prenom,
+                ":mailutil" => $mail,
+                ":typeutil" => $typeutil,
+                ":idligue" => $idligue
 
-        $sql = "INSERT INTO utilisateur(pseudoutil, mdputil,nomutil,prenomutil, typeutil, mailutil) VALUES (:pseudoutil, :mdputil,:nomutil,:prenomutil,:mailutil, :typeutil, :idligue )";
-        $params = array(
-            ":pseudoutil" => $pseudo,
-            ":mdputil" => $mdp,
-            "nomutil" => $nom,
-            ":prenomutil" => $prenom,
-            ":mailutil" => $mail,
-            ":typeutil" => $typeutil,
-            ":idligue" => $idligue
-            
-        );
-        try {
-            $sth = $dbh->prepare($sql);
-            $sth->execute($params);
-            $nb = $sth->rowcount();
-        } catch (PDOException $e) {
-            die("<p>Erreur lors de la requête SQL : " . $e->getMessage() . "</p>");
+            );
+            try {
+                $sth = $dbh->prepare($sql);
+                $sth->execute($params);
+                $nb = $sth->rowcount();
+            } catch (PDOException $e) {
+                die("<p>Erreur lors de la requête SQL : " . $e->getMessage() . "</p>");
+            }
+            header("Location: connexion.php");
+        }else{
+            die("Mot de passe non comforme : vous devez avoir au moins 8 caractères, 1 Majuscules, 1 minuscule, 1 Chiffre et 1 caractère spécial. Veuillez recommencer => <a href='inscription.php'>Inscription</a>");
         }
-        $message = "votre compte a été créé, vous pouvez maintenant <a href='connexion.php'>vous connecter</a>";
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -86,12 +87,12 @@ if ($submit) {
             <div class="login">
                 <form class="login-container" method="POST">
                     <p><input type="username" name="pseudo" placeholder="Nom utilisateur" required></p>
-                    <p><input type="text" name="nom" placeolder="Nom" require></p>
-                    <p><input type="text" name="prenom" placeolder="Prenom" require></p>
+                    <p><input type="text" name="nom" placeholder="Nom" require></p>
+                    <p><input type="text" name="prenom" placeholder="Prenom" require></p>
                     <p><input type="email" name="mail" placeholder="Email" required></p>
                     <p><input type="password" name="mdp" placeholder="Mot de passe" required></p>
                     <p> <input type="hidden" name="idtype" value="1"> </p>
-
+                    <p> <input type="hidden" name="idligue" value="1"> </p>
                     <p><input type="submit" name="submit" value="S'inscrire"></p>
                 </form>
                 <?php if ($submit) {
@@ -103,4 +104,8 @@ if ($submit) {
             </div>
         </div>
     </div>
+
+    <script>
+        window.alert(Document.getElementById('reussi') );
+    </script>
 </body>
