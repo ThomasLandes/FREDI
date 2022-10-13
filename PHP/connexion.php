@@ -19,9 +19,9 @@ if ($submit) {
         $mail = strtolower($mail); // on s'assure que le mail soit en minuscule
         
 
-        $sql = 'select * from utilisateur where mail = :mail';
+        $sql = 'select * from utilisateur where mailutil = :mailutil';
         $params = array(
-            ":mail" => $mail,
+            ":mailutil" => $mail,
         );
         try {
             $sth = $dbh->prepare($sql);
@@ -32,7 +32,8 @@ if ($submit) {
             die("<p>Erreur lors de la requête SQL : " . $e->getMessage() . "</p>");
         }
     
-        $passwordHash = $result['mdp'];
+        $passwordHash = $result['mdputil'];
+    
 
         if ($nb == 1 && password_verify($mdp, $passwordHash)) {  
                     $_SESSION['pseudo'] = $result['pseudo'];
@@ -40,7 +41,7 @@ if ($submit) {
                     $_SESSION['type'] = $result['idtype'];
                     $_SESSION['ligue'] = $result['idligue'];
                  
-                    header('Location: FAQ_accueil.php');
+                    header('Location: accueil.php');
         }
     }
 }
@@ -76,6 +77,7 @@ if ($submit) {
                     <p><input type="email" name="mail" placeholder="Email" value=""></p>
                     <p><input type="password" name="mdp" placeholder="Mot de passe" value=""></p>
                     <p><input type="submit" value="Se connecter" name="submit"></p>
+                    <p><a href="mdpoublie.php">mot de passe oublie ?</a></p>
                 </form>
             </div>
             <div class="changetype">
