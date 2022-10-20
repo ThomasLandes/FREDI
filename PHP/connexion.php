@@ -32,16 +32,16 @@ if ($submit) {
             die("<p>Erreur lors de la requête SQL : " . $e->getMessage() . "</p>");
         }
     
-        $passwordHash = $result['mdputil'];
-    
+        $passwordHash = $result['mdputil'];    
 
         if ($nb == 1 && password_verify($mdp, $passwordHash)) {  
+
                     $_SESSION['pseudo'] = $result['pseudo'];
+                    $_SESSION['mail'] = $result['mailutil']
                     $_SESSION['id'] = $result['idutilisateur'];
                     $_SESSION['type'] = $result['idtype'];
-                    $_SESSION['ligue'] = $result['idligue'];
                  
-                    header('Location: accueil.php');
+                    header('Location: index.php');
         }
     }
 }

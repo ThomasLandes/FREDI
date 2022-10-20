@@ -1,3 +1,6 @@
+<?php 
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -12,6 +15,7 @@
         <li><a href="inscription.php"> Inscription</a></p></li>
         <li><a href="connexion.php"> Connexion</a></p></li>
         <li><a href="deconnexion.php"> Deconnexion</a></p></li>
+        <li><a href="administration.php"></a>Administration</a></p></li>
     </ul>
 </body>
 </html>
