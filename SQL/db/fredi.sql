@@ -133,7 +133,7 @@ CREATE TABLE `periodef` (
 CREATE TABLE `utilisateur` (
   `idutil` int(11) NOT NULL,
   `pseudoutil` varchar(50) NOT NULL,
-  `mdputil` varchar(50) NOT NULL,
+  `mdputil` varchar(255) NOT NULL,
   `nomutil` varchar(50) NOT NULL,
   `prenomutil` varchar(50) NOT NULL,
   `mailutil` varchar(50) NOT NULL,
