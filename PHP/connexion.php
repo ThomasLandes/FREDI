@@ -1,6 +1,6 @@
 <?php
-session_start();
-include "fonctions/fonction.php"; //connexion à la BDD
+
+include "ini.php"; //ajout de toute les fonctions
 $dbh = db_connect();
 
 $mail = isset($_POST['mail']) ? $_POST['mail'] : '';
@@ -35,13 +35,12 @@ if ($submit) {
         $passwordHash = $result['mdputil'];    
 
         if ($nb == 1 && password_verify($mdp, $passwordHash)) {  
-
-                    $_SESSION['pseudo'] = $result['pseudo'];
+                    $_SESSION['pseudo'] = $result['pseudoutil'];
                     $_SESSION['mail'] = $result['mailutil'];
                     $_SESSION['id'] = $result['idutilisateur'];
-                    $_SESSION['type'] = $result['idtype'];
+                    $_SESSION['type'] = $result['typeutil'];
                  
-                    header('Location: index.php');
+                    redirect('index.php');
         }
     }
 }

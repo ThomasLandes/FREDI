@@ -1,6 +1,6 @@
 <?php
 
-include 'fonctions/fonction.php';
+include 'ini.php';
 
 $dbh = db_connect();
 
@@ -51,7 +51,7 @@ if ($submit) {
             } catch (PDOException $e) {
                 die("<p>Erreur lors de la requête SQL : " . $e->getMessage() . "</p>");
             }
-            header("Location: connexion.php");
+            redirect('connexion.php');
         }else{
             die("Mot de passe non comforme : vous devez avoir au moins 8 caractères, 1 Majuscules, 1 minuscule, 1 Chiffre et 1 caractère spécial. Veuillez recommencer => <a href='inscription.php'>Inscription</a>");
         }

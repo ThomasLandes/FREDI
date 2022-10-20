@@ -1,9 +1,11 @@
-<?php 
+<?php
+
 /**
  * Fonctions de connection à la BDD
  *
  */
-function db_connect() {
+function db_connect()
+{
   $dsn = 'mysql:host=localhost;dbname=fredi';  // contient le nom du serveur et de la base
   $user = 'root';
   $password = '';
@@ -17,10 +19,21 @@ function db_connect() {
 }
 
 
+
+
+
 /**
- * Fonctions de validation
+ * Fonctions de validation des fichier 
  *
  */
+function redirect($url)
+{
+  if (file_exists($url)) {
+  header('Location: ' . $url);
+    exit();
+  }
+}
+
 
 /**
  * Retourne vrai si le champs est vide
@@ -28,9 +41,10 @@ function db_connect() {
  * @param string $field
  * @return boolean
  */
- function is_empty(string $field){
+function is_empty(string $field)
+{
   return empty(trim($field));
- }
+}
 
 /**
  * Retourne vrai si le champs a une longueur minimum
@@ -39,7 +53,8 @@ function db_connect() {
  * @param int $min la longueur minimum
  * @return boolean vrai si la longueur du champs est >= minimum
  */
-function min_length(string $field,int $min){
+function min_length(string $field, int $min)
+{
   return mb_strlen($field) >= $min;
 }
 
@@ -51,7 +66,8 @@ function min_length(string $field,int $min){
  * @return boolean vrai si la longueur du champs est <= minimum
  */
 
-function max_length(string $field,int $max){
+function max_length(string $field, int $max)
+{
   return mb_strlen($field) <= $max;
 }
 
@@ -61,7 +77,8 @@ function max_length(string $field,int $max){
  * @param string $field le champs à vérifier
  * @return boolean vrai si le champs est alphanumérique (lettre ou chiffre)
  */
-function is_alphanum(string $field) {
+function is_alphanum(string $field)
+{
   return ctype_alnum($field);
 }
 
@@ -71,7 +88,8 @@ function is_alphanum(string $field) {
  * @param string $field le champs à vérifier
  * @return boolean vrai si le champs ne contient que des lettres majuscules
  */
-function is_uppercase(string $field) {
+function is_uppercase(string $field)
+{
   return ctype_upper($field);
 }
 
@@ -81,7 +99,8 @@ function is_uppercase(string $field) {
  * @param string $field le champs à vérifier
  * @return boolean vrai si le champs ne contient que des lettres minuscules
  */
-function is_lowercase(string $field) {
+function is_lowercase(string $field)
+{
   return ctype_lower($field);
 }
 
@@ -92,8 +111,9 @@ function is_lowercase(string $field) {
  * @param array $values le tableau (indicé) contenant les valeurs
  * @return boolean vrai si le champs est l'une des valeurs du tableau
  */
-function contains_value(string $field, array $values){
-  return in_array($field,$values);
+function contains_value(string $field, array $values)
+{
+  return in_array($field, $values);
 }
 
 /**
@@ -103,8 +123,9 @@ function contains_value(string $field, array $values){
  * @param array $keys le tableau (associatif) contenant les clés
  * @return boolean vrai si le champs est l'une des clés du tableau
  */
-function contains_key(string $field, array $keys){
-  return array_key_exists($field,$keys);
+function contains_key(string $field, array $keys)
+{
+  return array_key_exists($field, $keys);
 }
 
 /**
@@ -113,8 +134,9 @@ function contains_key(string $field, array $keys){
  * @param string $field le champs à vérifier
  * @return boolean vrai si le champs contient au moins un chiffre
  */
-function contains_num(string $field) {
-  return preg_match("#[0-9]#",$field);
+function contains_num(string $field)
+{
+  return preg_match("#[0-9]#", $field);
 }
 
 /**
@@ -123,8 +145,9 @@ function contains_num(string $field) {
  * @param string $field le champs à vérifier
  * @return boolean vrai si le champs contient au moins une minuscule
  */
-function contains_lowercase(string $field) {
-  return preg_match("#[a-z]#",$field);
+function contains_lowercase(string $field)
+{
+  return preg_match("#[a-z]#", $field);
 }
 
 /**
@@ -133,8 +156,9 @@ function contains_lowercase(string $field) {
  * @param string $field le champs à vérifier
  * @return boolean vrai si le champs contient au moins une majuscule
  */
-function contains_uppercase(string $field) {
-  return preg_match("#[A-Z]#",$field);
+function contains_uppercase(string $field)
+{
+  return preg_match("#[A-Z]#", $field);
 }
 
 /**
@@ -143,18 +167,19 @@ function contains_uppercase(string $field) {
  * @param string $field le champs à vérifier
  * @return boolean vrai si le champs contient au moins un caractère spécial
  */
-function contains_special(string $field) {
-  return preg_match("#[\W]#",$field);
+function contains_special(string $field)
+{
+  return preg_match("#[\W]#", $field);
 }
 
 /**
  * Permet la création de log de connexion/deconnexion
  */
-function connection_log($info,$action)
+function connection_log($info, $action)
 {
-    $logfile ='../../htaccess/.htaccess/connection_log.txt';
-    $date = date('D, d-m-y h:i:s');
-    $logopen=(fopen("$logfile",'a'));
-    fwrite($logopen,$date." ".$action." ".$info."\r\n");
-    fclose($logopen);
+  $logfile = '../../htaccess/.htaccess/connection_log.txt';
+  $date = date('D, d-m-y h:i:s');
+  $logopen = (fopen("$logfile", 'a'));
+  fwrite($logopen, $date . " " . $action . " " . $info . "\r\n");
+  fclose($logopen);
 }

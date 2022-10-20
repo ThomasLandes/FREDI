@@ -78,6 +78,7 @@ if ($submit) {
   // Pas de message : connecté !
   if (count($messages) == 0) {
     header("Location: ok.php");
+    exit();
   }
 }
 ?>
