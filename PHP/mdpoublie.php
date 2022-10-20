@@ -5,7 +5,7 @@ $mail = isset($_POST['email']) ? $_POST['email'] : '';
 $submit = isset($_POST['submit']);
 
 
-$sql = 'select * from utilisateur where mailutil = :mailutil';
+$sql = 'select * from utilisateur where mailutil = :mailutil';    // Trouve utilisateur depuis BDD
 $params = array(
     ":mailutil" => $mail,
 );
@@ -20,16 +20,16 @@ try {
 
 
 
-if ($submit && $mail == $result["mailutil"]) {
-    $password = uniqid();
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+if ($submit && $mail == $result["mailutil"]) {   //compare le mail donné avec le mail de la BDD lors du submit 
+    $password = generate_random_letters(2).uniqid().getRandomString(2);  // renvoie aléatoire lettreMajuscule.ChiffreLettre.CaracteresSpécial  
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT); // hash mot de passe
 
-        $stmt = $dbh->prepare("UPDATE utilisateur SET mdputil= :mdputil WHERE mailutil = :mailutil");
+        $stmt = $dbh->prepare("UPDATE utilisateur SET mdputil= :mdputil WHERE mailutil = :mailutil"); //modifie mdp dans la BDD
         $stmt->execute(array(
 ":mdputil" => $hashedPassword,
 ":mailutil" =>$mail,
         ));
-     echo"votre mdp est " .$password. "";
+     echo"votre mdp est ".$password."";
 }
 
 ?>

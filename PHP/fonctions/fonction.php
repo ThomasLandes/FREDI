@@ -17,6 +17,28 @@ function db_connect() {
 }
 
 
+
+function generate_random_letters($length) {         // renvoie chaine de lettres Majuscules aléatoirement
+    $random = '';
+    for ($i = 0; $i < $length; $i++) {
+        $random .= chr(rand(ord('A'), ord('Z')));
+    }
+    return $random;
+}
+
+
+
+function getRandomString($n) {     // renvoie chaine de caracteres speciaux aleatoirement 
+    $characters = '?!#';
+    $randomString = '';
+  
+    for ($i = 0; $i < $n; $i++) {
+        $index = rand(0, strlen($characters) - 1);
+        $randomString .= $characters[$index];
+    }
+  
+    return $randomString;
+}
 /**
  * Fonctions de validation
  *
