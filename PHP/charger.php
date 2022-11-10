@@ -1,17 +1,10 @@
 <?php
-include 'fonctions/fonction.php';
+include 'ini.php';
 // Connexion à la base
-$conn = mysqli_connect("localhost","root","");
+$conn = mysqli_connect("localhost","root","","fredi");
+$conn->set_charset("utf8_general_ci");
 $dbh = db_connect();
-// Liste des personnes
-$sql = 'select * from utilisateur';
-try {
-    $sth = $dbh->prepare($sql);
-    $sth->execute();
-    $rows = $sth->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-    die("<p>Erreur lors de la requête SQL : " . $e->getMessage() . "</p>");
-}
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -28,20 +21,50 @@ try {
     <h1>Administration des données</h1>
     <h2>Chargement des fichiers</h2>
 
-    <form enctype="multipart/form-data" action="import_csv.php" method="post">
+   <!-- <form enctype="multipart/form-data" action="import_csv.php" method="post">
         <div class="input-row">
-            <label class="col-md-4 control-label">Choisir un fichier CSV</label>
+            <label>Choisir un fichier CSV</label>
             <input type="file" name="file" id="file" accept=".csv">
             <br />
             <br />
             <button type="submit" id="submit" name="import" class="btn-submit">Import</button>
             <br />
         </div>
-    </form>
+    </form> -->
+    <?php
+    $conn = mysqli_connect("localhost","root","","fredi");
+    $conn->set_charset("utf8_general_ci");
+  
+    if (isset($_POST["import"])) {
+      
+      $fileName = $_FILES["file"]["tmp_name"];
+      
+      if ($_FILES["file"]["size"] > 0) {
+       
+        $file = fopen($fileName,"r");
+  
+        while (($column = fgetcsv($file, 10000, ";")) !== FALSE) {
+          $sql = "INSERT into motif (id_motif,libmotif)
+               values ('" . $column[0] . "','" . $column[1] . "')";
+          $result = mysqli_query($conn, $sql);
+          
+          if (!empty($result)) {
+            $type = "success";
+            $message = "Les Données sont importées dans la base de données";
+          } else {
+            $type = "error";
+            $message = "Problème lors de l'importation de données CSV";
+          }
+        } 
+      }
+    }
+    ?>
+
     <?php
     $sql = "SELECT * FROM motif";
     $result = mysqli_query($conn, $sql);
-    if (mysqli_num_rows($result) > 0) {
+    $nb_row = mysqli_num_rows($result);
+    if ( $nb_row > 0) {
     ?>
         <table>
             <thead>
