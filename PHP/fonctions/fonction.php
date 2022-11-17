@@ -202,3 +202,18 @@ function connection_log($info, $action)
   fwrite($logopen, $date . " " . $action . " " . $info . "\r\n");
   fclose($logopen);
 }
+
+function parseCSV($file)
+{
+    echo "<h2>Lecture de ".$file."</h2>";
+    $row = 1;
+    if (($handle = fopen($file, "r")) !== false) {
+        while (($data = fgetcsv($handle, 1000, ";")) !== false) {
+            $num = count($data);
+            echo "<pre>";
+            print_r($data);
+            echo "</pre>";
+        }
+        fclose($handle);
+    }
+}
