@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : jeu. 06 oct. 2022 à 14:10
+-- Généré le : jeu. 17 nov. 2022 à 15:41
 -- Version du serveur : 10.4.24-MariaDB
 -- Version de PHP : 8.1.6
 
@@ -85,6 +85,13 @@ CREATE TABLE `ligues` (
   `nomligue` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Déchargement des données de la table `ligues`
+--
+
+INSERT INTO `ligues` (`idligue`, `nomligue`) VALUES
+(1, 'defaut');
+
 -- --------------------------------------------------------
 
 --
@@ -140,6 +147,7 @@ CREATE TABLE `utilisateur` (
   `typeutil` varchar(50) NOT NULL,
   `idligue` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 --
 -- Index pour les tables déchargées
@@ -227,7 +235,7 @@ ALTER TABLE `lignefrais`
 -- AUTO_INCREMENT pour la table `ligues`
 --
 ALTER TABLE `ligues`
-  MODIFY `idligue` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idligue` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `motif`
@@ -251,7 +259,7 @@ ALTER TABLE `periodef`
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `idutil` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idutil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT;
 
 --
 -- Contraintes pour les tables déchargées

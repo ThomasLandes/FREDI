@@ -37,7 +37,7 @@ if ($submit) {
         if ($nb == 1 && password_verify($mdp, $passwordHash)) {  
                     $_SESSION['pseudo'] = $result['pseudoutil'];
                     $_SESSION['mail'] = $result['mailutil'];
-                    $_SESSION['id'] = $result['idutilisateur'];
+                    $_SESSION['id'] = $result['idutil'];
                     $_SESSION['type'] = $result['typeutil'];
                  
                     redirect('index.php');
