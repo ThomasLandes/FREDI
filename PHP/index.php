@@ -37,6 +37,8 @@ if (!empty($conect) ){
         </li>
         <li><a href="deconnexion.php"> Deconnexion</a></p>
         </li>
+        <li><a href="ListeNote.php"> List</a></p>
+        </li>
         <?php if ($admin) {
             echo "<li><a href='charger.php'>Administration</a></p></li>";
         } ?>

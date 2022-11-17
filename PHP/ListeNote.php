@@ -4,7 +4,7 @@ include "ini.php";
 // Connexion à la base
 $dbh=db_connect();
 
-  $sql = 'select datenote , montanttot from notefrais where idutil = :idutil;';
+  $sql = ' SELECT montanttot,dateNote,validite,numordre from notefrais , utilisateur where utilisateur.idutil = notefrais.idutil and utilisateur.idutil = :idutil;';
 
   $params = array(
       ":idutil" =>  $_SESSION['id'],
@@ -40,20 +40,22 @@ $dbh=db_connect();
 <?php
 
     echo '<table>';
-    echo '<tr><th>Montant</th><th>Date</th><th>Validite</th></tr>';
+    echo '<tr><th>Ordre</th><th>Montant</th><th>Date</th><th>Validite</th></tr>';
     
    
     foreach ($rows as $row)
     {
        
       echo '<tr>';
-      echo "<td>".$row['montantTot']."</td>";
+      echo '<td>'.$row['numordre'].'</td>';
+      echo "<td>".$row['montanttot']."</td>";
       echo '<td>'.$row['dateNote'].'</td>';
+      echo '<td>'.$row['validite'].'</td>';
       echo "</tr>";
     }
     echo "</table>";
 
-print_r( $_SESSION);
+
 ?>
 
 </html>
