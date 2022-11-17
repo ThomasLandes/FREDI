@@ -1,6 +1,8 @@
 <?php
 include "ini.php"; //ajout de toute les fonctions + session start
 //print_r($_SESSION);
+$page="index.php";
+logToDisk($page);
 $admin = false;
 $controler = false;
 $conect = isset($_SESSION['mail']);
