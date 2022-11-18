@@ -206,14 +206,14 @@ function connection_log($info, $action)
 function parseCSV($file)
 {
     echo "<h2>Lecture de ".$file."</h2>";
-    $row = 1;
+    echo "<table>";
     if (($handle = fopen($file, "r")) !== false) {
         while (($data = fgetcsv($handle, 1000, ";")) !== false) {
             $num = count($data);
-            echo "<pre>";
-            print_r($data);
-            echo "</pre>";
+            echo "<tr>";
+          echo "<td>".$data[0]."</td><td>".$data[1]."<td>";
         }
+        echo "</tr>";
         fclose($handle);
     }
 }
