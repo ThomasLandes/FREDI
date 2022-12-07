@@ -235,7 +235,7 @@ ALTER TABLE `lignefrais`
 -- AUTO_INCREMENT pour la table `ligues`
 --
 ALTER TABLE `ligues`
-  MODIFY `idligue` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT;
+  MODIFY `idligue` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `motif`
@@ -259,7 +259,7 @@ ALTER TABLE `periodef`
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `idutil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT;
+  MODIFY `idutil` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Contraintes pour les tables déchargées
