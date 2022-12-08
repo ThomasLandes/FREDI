@@ -22,6 +22,7 @@ Table des matières
 1.	Téléchargement et installation	
 2.	Inscription et connexion	
 3.	Log.txt	
+4.	Gestion type utilisateur
 
 
 
@@ -47,3 +48,9 @@ Vous pouvez maintenant accéder à index.php
 
 Une fois connecté chaque fois que vous allez sur une page une trace est enregistrée dans le fichier htaccess/log.txt
 
+4.) Gestion type utilisateur
+
+pour changer le type d'utilisateur il faut le faire manuellmeent via la table utilisateur, au niveau du champ typeutil : 
+  -1 adhérent
+  -2 admin
+  -3 controleur
