@@ -19,9 +19,9 @@ MODE D’EMPLOI
 
 
 Table des matières
-1.	Téléchargement et installation	2
-2.	Inscription et connexion	2
-3.	Log.txt	2
+1.	Téléchargement et installation	
+2.	Inscription et connexion	
+3.	Log.txt	
 
 
 
