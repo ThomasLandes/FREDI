@@ -10,6 +10,9 @@ Ce logiciel s'inscrit dans une continuité du site de la Maison des Ligues Lorra
 Suivi de l'organisation et de l'avancement : https://trello.com/b/eRW868V0/organisation
 
 
+
+==================================================================================================================================
+
 FREDI
 MODE D’EMPLOI
 
