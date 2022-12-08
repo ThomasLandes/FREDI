@@ -11,7 +11,7 @@ Suivi de l'organisation et de l'avancement : https://trello.com/b/eRW868V0/organ
 
 
 
-======================================================================================
+===================================================
 
 FREDI
 MODE D’EMPLOI
