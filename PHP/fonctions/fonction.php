@@ -229,10 +229,10 @@ function logToDisk($page)
   // Horodatage
   $date = new DateTime('now',new DateTimeZone('Europe/Paris'));
   $laDate = $date->format("Y-m-d H:i:s.u");
-  $root = "D:Xampp\htdocs\projets\LIMAYRAC\AP\FREDI"; // Dossier courant
+  $root = ".."; // Dossier courant
   //$message = $laDate . ";" . $_SERVER['REMOTE_ADDR'] . ";" . $page . ";" . PHP_EOL;
   $message = $laDate .";".get_ip().";".$page.PHP_EOL;
-  $filename = $root . DIRECTORY_SEPARATOR . 'htaccess\log.txt';
+  $filename = $root .'/htaccess/log.txt';
   file_put_contents($filename, $message, FILE_APPEND);
   return $filename;
 }
