@@ -71,7 +71,7 @@ if ($submit) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400&family=Raleway&display=swap" rel="stylesheet">
-    <title>Accueil FAQ MDL</title>
+    <title>Accueil FREDI</title>
 </head>
 
 <body>
@@ -82,7 +82,7 @@ if ($submit) {
         </div>
 
         <div class="contenu">
-            <h3>Portail inscription FAQ maison des ligues </h3>
+            <h3>Portail inscription FREDI </h3>
             <hr>
             <div class="login">
                 <form class="login-container" method="POST">
