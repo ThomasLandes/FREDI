@@ -254,3 +254,21 @@ function get_ip()
     ?? '0.0.0.0';
   return $ip;
 }
+
+
+function verrif_util($conect){
+$type = isset($_SESSION['type']) ? $_SESSION['type'] : 1;
+if (!empty($conect) ){
+    switch ($type){
+        case 2 : $util = ADMIN;
+        break;
+        case 3 : $util = CONTROLER;
+        break;
+        default: $util = DEFAULT_USER;
+        break;
+    }
+ }else {
+    redirect('connexion.php');
+}
+return $util;
+}

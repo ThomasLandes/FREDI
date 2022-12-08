@@ -3,22 +3,8 @@ include "ini.php"; //ajout de toute les fonctions + session start
 //print_r($_SESSION);
 $page="index.php";
 logToDisk($page);
-$admin = false;
-$controler = false;
-$conect = isset($_SESSION['mail']);
-$type = isset($_SESSION['type']) ? $_SESSION['type'] : 1;
-if (!empty($conect) ){
-    switch ($type){
-        case 2 : $admin = true;
-        break;
-        case 3 : $controler = true;
-        break;
-        default:
-        break;
-    }
- }else {
-    redirect('connexion.php');
-}
+$util = verrif_util($conect);
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -41,8 +27,10 @@ if (!empty($conect) ){
         </li>
         <li><a href="ListeNote.php"> List</a></p>
         </li>
-        <?php if ($admin) {
-            echo "<li><a href='charger.php'>Administration</a></p></li>";
+ 
+        <?php
+        if ($util === ADMIN) {
+            echo "<li><a href='administration.php'>Administration</a></p></li>";
         } ?>
     </ul>
 </body>

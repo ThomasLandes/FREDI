@@ -1,6 +1,10 @@
 <?php
 include 'ini.php';
-$root = "D:xampp\htdocs\projet\AP FREDI\FREDI";
+$util = verrif_util($conect);
+if($util != ADMIN){
+  redirect('index.php');
+}
+$root = "..";
 $file2 = $root . DIRECTORY_SEPARATOR . "CSV\clubs.csv";
 $file1 = $root . DIRECTORY_SEPARATOR . "CSV\ligues.csv";
 ?>

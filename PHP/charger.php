@@ -3,7 +3,7 @@ include 'ini.php';
 $dbh = db_connect();
 // Connexion à la base
 //define('ROOT', __FILE__);
-$root = "D:xampp\htdocs\projet\AP FREDI\FREDI";
+$root = "..";
 $file2 = $root . DIRECTORY_SEPARATOR . "CSV\clubs.csv";
 $file1 = $root . DIRECTORY_SEPARATOR . "CSV\ligues.csv";
 $data2 = [];
@@ -26,7 +26,7 @@ if (($handle = fopen($file1, "r")) !== false) {
       $sth = $dbh->prepare($sql1);
       $sth->execute();
     } catch (PDOException $ex) {
-      die("Erreur lors de la requête SQL 1: " . $ex->getMessage());
+      die("Erreur lors de la requête SQL 2: " . $ex->getMessage());
     }
   }
   fclose($handle);
@@ -42,7 +42,7 @@ if (($handle2 = fopen($file2, "r")) !== false) {
       $sth->execute();
     } catch (PDOException $ex) {
       echo "salur";
-      die("Erreur lors de la requête SQL 2: " . $ex->getMessage());
+      die("Erreur lors de la requête SQL 3: " . $ex->getMessage());
     }
   }
   fclose($handle2);
