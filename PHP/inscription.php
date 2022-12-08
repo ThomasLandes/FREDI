@@ -29,8 +29,7 @@ if ($submit) {
     }
 
     if ($nbresult > 0) {
-        $message = "Un compte est déjà relié à ce mail ou ce pseudo";
-        die("<p>Erreur : " . $message . "</p>");
+        $messages[] = "Un compte est déjà relié à ce mail ou ce pseudo";
     } else {
         if ( min_length($mdpuncrypt, 8) && contains_num($mdpuncrypt) && contains_lowercase($mdpuncrypt) && contains_uppercase($mdpuncrypt) && contains_special($mdpuncrypt)) {
             $sql = "INSERT INTO utilisateur(pseudoutil, mdputil,nomutil,prenomutil, typeutil, mailutil, idligue) VALUES (:pseudoutil, :mdputil,:nomutil,:prenomutil,:typeutil , :mailutil, :idligue )";
@@ -53,7 +52,7 @@ if ($submit) {
             }
             redirect('connexion.php');
         }else{
-            die("Mot de passe non comforme : vous devez avoir au moins 8 caractères, 1 Majuscules, 1 minuscule, 1 Chiffre et 1 caractère spécial. Veuillez recommencer => <a href='inscription.php'>Inscription</a>");
+            $messages[]= "Mot de passe non comforme : vous devez avoir au moins 8 caractères, 1 Majuscules, 1 minuscule, 1 Chiffre et 1 caractère spécial. Veuillez recommencer => <a href='inscription.php'>Inscription</a>";
         }
     }
 }
@@ -96,7 +95,13 @@ if ($submit) {
                     <p><input type="submit" name="submit" value="S'inscrire"></p>
                 </form>
                 <?php if ($submit) {
-                    echo '<p>' . $message . '</p>';
+                    if (count($messages) > 0) {
+                        echo "<ul>";
+                        foreach ($messages as $message) {
+                          echo "<li class=\"erreur\" >" . $message . "</li>";
+                        }
+                        echo "</ul>";
+                    }
                 } ?>
             </div>
             <div class="changetype">
