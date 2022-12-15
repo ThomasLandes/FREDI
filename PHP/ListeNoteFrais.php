@@ -49,7 +49,7 @@ $dbh=db_connect();
 <?php
 
     echo '<table>';
-    echo '<tr><th>DateDeplacement</th><th>libDeplacement</th><th>Kilometrage</th><th>FraisPeage</th><th>FraisRepas</th><th>FraisHeberge</th><th>MontantTot</th></tr>';
+    echo '<tr><th>DateDeplacement</th><th>libDeplacement</th><th>Kilometrage</th><th>FraisPeage</th><th>FraisRepas</th><th>FraisHeberge</th><th>MontantTot</th><th>Ajouter</tr>';
     
    
     foreach ($rows as $row)
@@ -66,7 +66,7 @@ $dbh=db_connect();
       echo "</tr>";
     }
     echo "</table>";
-
+    echo '<p><a href="AjouterNoteFrais.php?id_note=' . $id_note. '">Ajouter </a>une liste de notes</p>';
 
 ?>
 </body>

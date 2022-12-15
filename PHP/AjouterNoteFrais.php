@@ -7,22 +7,36 @@ $dbh = db_connect();
 
 
 // Lecture du formulaire
-$date = isset($_POST['date']) ? $_POST['date'] : '';
-$kilometrage = isset($_POST['Kilometrage']) ? $_POST['Kilometrage'] : '';
+$datedeplacement  = isset($_POST['date']) ? $_POST['date'] : '';
+$kilometrage = isset($_POST['kilometrage']) ? $_POST['kilometrage'] : '';
 $libdeplacement = isset($_POST['deplacement']) ? $_POST['deplacement'] : '';
-$fraispeage = isset($_POST['Fraispeage']) ? $_POST['Fraispeage'] : '';
-$fraisrepas = isset($_POST['FraisRepas']) ? $_POST['FraisRepas'] : '';
-$fraisheberge = isset($_POST['FraisHeberge']) ? $_POST['FraisHeberge'] : '';
-$MontantTotal = isset($_POST['FraisHeberge']) ? $_POST['FraisHeberge'] : '';
+$FraisPeage = isset($_POST['FraisPeage']) ? $_POST['FraisPeage'] : '';
+$FraisRepas = isset($_POST['FraisRepas']) ? $_POST['FraisRepas'] : '';
+$FraisHeberge = isset($_POST['FraisHeberge']) ? $_POST['FraisHeberge'] : '';
+$MontantTotal = isset($_POST['MontantTotal']) ? $_POST['MontantTotal'] : '';
+$idnote = isset($_POST['id_note']) ? $_POST['id_note'] : '';
+$id_motif = isset($_POST['Motif']) ? $_POST['Motif'] : '';
+$id_note = isset($_GET['id_note']) ? $_GET['id_note'] : null;
 
 $submit = isset($_POST['submit']);
 
 // Ajout dans la base
 if ($submit) {
-    $sql = "INSERT INTO `lignefrais` (`idligne`, `datedeplacement`, `libDeplacement`, `kilometrage`, `fraisPeage`, `fraisRepas`, `fraisHeberge`, `montantTot`, `id_note`, `id_motif`) VALUES ('2', '2022-12-15', 'voiture', '60', '30', '30', '30', '90', '1', '1');";
+    $sql = "INSERT INTO `lignefrais` ( `datedeplacement`, `libDeplacement`, `kilometrage`, `fraisPeage`, `fraisRepas`, `fraisHeberge`, `montantTot`, `id_note`, `id_motif`) 
+    VALUES ( :datedeplacement, :libdeplacement, :kilometrage, :FraisPeage , :FraisRepas, :FraisHeberge, :MontantTotal, :id_note, :id_motif);";
+    
     $params = array(
-        ":question" => $question,
-        ":idutilisateur" => $id,
+   
+        ":datedeplacement" => $datedeplacement,
+        ":libdeplacement" =>$libdeplacement,
+        ":kilometrage" => $kilometrage,
+        ":FraisPeage" => $FraisPeage,
+        ":FraisRepas" => $FraisRepas,
+        ":FraisHeberge" => $FraisHeberge,
+        ":MontantTotal" => $MontantTotal,
+        ":id_note" => $idnote,
+        ":id_motif" => $id_motif
+
     );
     try {
         $sth = $dbh->prepare($sql);
@@ -31,7 +45,7 @@ if ($submit) {
     } catch (PDOException $e) {
         die("<p>Erreur lors de la requête SQL : " . $e->getMessage() . "</p>");
     }
-    header("Location: historique.php");
+    header("Location: ListeNoteFrais.php?id_note=".$idnote."");
 } 
 
 
@@ -46,14 +60,23 @@ if ($submit) {
     <title>Document</title>
 </head>
 <body>
-<form action="ListeNoteFrais.php" method="post">
-  <p>Date Deplacement<br /><input type="date" name="date" value=""></p>
-  <p>Lib Deplacement<br /><input type="text" name="deplacement" value=""></p>
-  <p>Kilometrage<br /><input type="text" name="Kilometrage" value=""></p>
-  <p>FraisPeage<br /><input type="text" name="FraisPeage" value=""></p>
-  <p>FraisRepas<br /><input type="text" name="FraisRepas" value=""></p>
-  <p>FraisHeberge<br /><input type="text" name="FraisHeberge" value=""></p>
-  <p>MontantTotal<br /><input type="text" name="MontantTotal" value=""></p>
+
+
+
+<form action=<?php echo $_SERVER['PHP_SELF'];?> " method="post">
+  <p>Date Deplacement<br /><input type="date" name="date" ></p>
+  <p>Lib Deplacement<br /><input type="text" name="deplacement" ></p>
+  <p>Kilometrage<br /><input type="text" name="kilometrage" ></p>
+  <p>FraisPeage<br /><input type="text" name="FraisPeage" ></p>
+  <p>FraisRepas<br /><input type="text" name="FraisRepas" ></p>
+  <p>FraisHeberge<br /><input type="text" name="FraisHeberge" ></p>
+  <p>MontantTotal<br /><input type="text" name="MontantTotal" ></p>
+  <p>Motif : <select name="Motif">
+<option value="1" selected>Travail</option>
+<option value="2" >Voiture</option>
+</select>
+</p>
+  <br /><input type="hidden" name="id_note" value= "<?php echo  $id_note?>"></p>
   <p><input type="submit" name="submit" value="OK"></p>
 </form>
 </body>

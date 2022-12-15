@@ -4,7 +4,7 @@ include "ini.php";
 // Connexion à la base
 $dbh=db_connect();
 
-  $sql = ' SELECT montanttot,dateNote,validite,numordre from notefrais , utilisateur where utilisateur.idutil = notefrais.idutil and utilisateur.idutil = :idutil;';
+  $sql = ' SELECT id_note,montanttot,dateNote,validite,numordre from notefrais , utilisateur where utilisateur.idutil = notefrais.idutil and utilisateur.idutil = :idutil;';
 
   $params = array(
       ":idutil" =>  $_SESSION['id'],
@@ -51,6 +51,7 @@ $dbh=db_connect();
       echo "<td>".$row['montanttot']."</td>";
       echo '<td>'.$row['dateNote'].'</td>';
       echo '<td>'.$row['validite'].'</td>';
+      echo '<td>[<a href="ListeNoteFrais.php?id_note=' . $row['id_note'] . '">Voir liste note de frais</a>]';
       echo "</tr>";
     }
     echo "</table>";
