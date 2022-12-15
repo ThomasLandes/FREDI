@@ -36,7 +36,16 @@ Prenez ensuite le fichier FREDI/sql/db/fredi.sql et importez le dans phpmyadmin.
 
 Le projet est prêt à être utilisé. 
 
-2.)	Inscription et connexion 
+2.) Gestion type utilisateur
+
+pour changer le type d'utilisateur il faut le faire manuellmeent via la table utilisateur, au niveau du champ typeutil : 
+  -1 adhérent
+  -2 admin
+  -3 controleur
+
+à faire impérativement avant la 1er connexion pour l'administrateur
+
+3.)	Inscription et connexion 
 
 Lancez l’application en allant dans : FREDI/PHP/index.php
 Si vous n’êtes pas connecté (ce qui sera le cas) vous êtes redirigé vers connexion.php. Commencez par créer votre compte en cliquant sur ‘inscrivez-vous’. 
@@ -44,13 +53,8 @@ Pour information, le mot de passe doit contenir 8 caractères dont au minimum un
 Retournez ensuite sur la page de connexion et entrez les identifiants saisis lors de l’inscription.
 Vous pouvez maintenant accéder à index.php
 
-3.)	Log.txt
+4.)	Log.txt
 
 Une fois connecté chaque fois que vous allez sur une page une trace est enregistrée dans le fichier htaccess/log.txt
 
-4.) Gestion type utilisateur
 
-pour changer le type d'utilisateur il faut le faire manuellmeent via la table utilisateur, au niveau du champ typeutil : 
-  -1 adhérent
-  -2 admin
-  -3 controleur

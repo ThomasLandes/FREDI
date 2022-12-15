@@ -206,7 +206,7 @@ function connection_log($info, $action)
 function parseCSV($file,$filename,$ext)
 {
   $fileDir = $file.$filename.$ext;
-    echo "<h2>Lecture de ".$filename."</h2>";
+    echo "<h2>Lecture des ".$filename."</h2>";
     echo "<table><tr><th>ID</th></tr>";
     if (($handle = fopen($fileDir, "r")) !== false) {
         while (($data = fgetcsv($handle, 1000, ";")) !== false) {
