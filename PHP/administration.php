@@ -1,6 +1,6 @@
 <?php
 include 'ini.php';
-$submit=false;
+$disable = " ";
 $util = verrif_util($conect);
 if($util != ADMIN){
   redirect('index.php');
@@ -12,6 +12,10 @@ $file1 = $root . DIRECTORY_SEPARATOR . "CSV\\";
 $filename1 = "ligues";
 $file3 = $root . DIRECTORY_SEPARATOR . "CSV\\";
 $filename3 = "motifs";
+
+if(isset($_GET['message'])){
+  $disable = "disabled";
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -26,8 +30,12 @@ $filename3 = "motifs";
 <body>
   <h1>Administration des données</h1>
   <h2>Chargement des fichiers</h2>
- <p>Met à jour les données des table Club, Ligue et Motif à partir des fichier CSV</p><input type=button onclick=window.location.href='charger.php&message="null"'; value=Charger >
+  <?php 
+echo "<p>Met à jour les données des table Club, Ligue et Motif à partir des fichier CSV</p><input type=button onclick=window.location.href='charger.php'; value='Charger' $disable >";
 
+$mess = isset($_GET['message'])?$_GET['message'] : ' ';
+echo $mess;
+?>
   <h3>Donée des Fichier CSV</h3>
   <?php
   parseCSV($file1,$filename1,".csv");
