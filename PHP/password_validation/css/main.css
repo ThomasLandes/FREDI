@@ -45,4 +45,5 @@ tr:nth-child(even) {
 
 .erreur {
   color : red;
+  margin: auto;
 }

@@ -203,17 +203,17 @@ function connection_log($info, $action)
   fclose($logopen);
 }
 
-function parseCSV($file)
+function parseCSV($file,$filename,$ext)
 {
-    echo "<h2>Lecture de ".$file."</h2>";
-    echo "<table>";
-    if (($handle = fopen($file, "r")) !== false) {
+  $fileDir = $file.$filename.$ext;
+    echo "<h2>Lecture de ".$filename."</h2>";
+    echo "<table><tr><th>ID</th></tr>";
+    if (($handle = fopen($fileDir, "r")) !== false) {
         while (($data = fgetcsv($handle, 1000, ";")) !== false) {
             $num = count($data);
-            echo "<tr>";
-          echo "<td>".$data[0]."</td><td>".$data[1]."<td>";
+          echo "<tr><td>".$data[0]."</td><td>".$data[1]."<td></tr>";
         }
-        echo "</tr>";
+        echo "</table>";
         fclose($handle);
     }
 }

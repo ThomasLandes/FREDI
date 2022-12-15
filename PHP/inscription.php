@@ -52,7 +52,7 @@ if ($submit) {
             }
             redirect('connexion.php');
         }else{
-            $messages[]= "Mot de passe non comforme : vous devez avoir au moins 8 caractères, 1 Majuscules, 1 minuscule, 1 Chiffre et 1 caractère spécial. Veuillez recommencer => <a href='inscription.php'>Inscription</a>";
+            $messages[]= "Mot de passe non comforme : vous devez avoir au moins 8 caractères, 1 Majuscules, 1 minuscule, 1 Chiffre et 1 caractère spécial. Veuillez recommencer => <a href='inscription.php'>recharger la page</a>";
         }
     }
 }
@@ -96,11 +96,9 @@ if ($submit) {
                 </form>
                 <?php if ($submit) {
                     if (count($messages) > 0) {
-                        echo "<ul>";
                         foreach ($messages as $message) {
-                          echo "<li class=\"erreur\" >" . $message . "</li>";
+                          echo "<div><p class='content' >" . $message . "</p></div>";
                         }
-                        echo "</ul>";
                     }
                 } ?>
             </div>
