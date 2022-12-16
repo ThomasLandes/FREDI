@@ -67,6 +67,31 @@ $dbh=db_connect();
     }
     echo "</table>";
     echo '<p><a href="AjouterNoteFrais.php?id_note=' . $id_note. '">Ajouter </a>une liste de notes</p>';
+    echo '<p><a href="index.php">Retour </a>Acceuil</p>';
+
+
+/* Trigger pour que utilisateur rentre le bon montant total 
+
+
+     DELIMITER |
+CREATE OR REPLACE TRIGGER before_insert_lignefrais BEFORE INSERT
+ON lignefrais FOR EACH ROW
+BEGIN
+
+DECLARE v_frais int ;
+
+ SET v_frais = NEW.fraisHeberge + NEW.fraisPeage + NEW.fraisRepas ;
+
+ if(new.montanttot != v_frais ) THEN 
+
+SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Montant total incorrect' ;
+
+END IF;
+
+END |
+DELIMITER ;
+  
+*/
 
 ?>
 </body>

@@ -79,5 +79,8 @@ if ($submit) {
   <br /><input type="hidden" name="id_note" value= "<?php echo  $id_note?>"></p>
   <p><input type="submit" name="submit" value="OK"></p>
 </form>
+<?php
+echo '<p><a href="index.php">Retour </a>Acceuil</p>';
+?>
 </body>
 </html>
