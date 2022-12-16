@@ -13,26 +13,12 @@ $util = verrif_util($conect);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.css">
     <title>FREDI</title>
 </head>
 
 <body>
-    <h1>FREDI - Accueil</h1>
-    <ul>
-        <li><a href="inscription.php"> Inscription</a></p>
-        </li>
-        <li><a href="connexion.php"> Connexion</a></p>
-        </li>
-        <li><a href="deconnexion.php"> Deconnexion</a></p>
-        </li>
-        <li><a href="ListeNote.php"> List</a></p>
-        </li>
- 
-        <?php
-        if ($util === ADMIN) {
-            echo "<li><a href='administration.php'>Administration</a></p></li>";
-        } ?>
-    </ul>
+ <?php  include 'menu.php'; ?>
 </body>
 
 </html>

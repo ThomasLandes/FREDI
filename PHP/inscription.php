@@ -91,7 +91,7 @@ if ($submit) {
                     <p><input type="email" name="mail" placeholder="Email" required></p>
                     <p><input type="password" name="mdp" placeholder="Mot de passe" required></p>
                     <p> <input type="hidden" name="idtype" value="1"> </p>
-                    <p> <input type="hidden" name="idligue" value="12"> </p>
+                    <p> <input type="hidden" name="idligue" value="99"> </p>
                     <p><input type="submit" name="submit" value="S'inscrire"></p>
                 </form>
                 <?php if ($submit) {

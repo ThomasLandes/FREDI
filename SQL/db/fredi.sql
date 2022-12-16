@@ -90,7 +90,7 @@ CREATE TABLE `ligues` (
 --
 
 INSERT INTO `ligues` (`idligue`, `nomligue`) VALUES
-(1, 'defaut');
+(99, 'defaut');
 
 -- --------------------------------------------------------
 

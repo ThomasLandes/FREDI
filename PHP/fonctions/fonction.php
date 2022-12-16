@@ -207,11 +207,11 @@ function parseCSV($file,$filename,$ext)
 {
   $fileDir = $file.$filename.$ext;
     echo "<h2>Lecture des ".$filename."</h2>";
-    echo "<table><tr><th>ID</th></tr>";
+    echo "<table><tr><th>ID</th><th>".$filename."</th></tr>";
     if (($handle = fopen($fileDir, "r")) !== false) {
         while (($data = fgetcsv($handle, 1000, ";")) !== false) {
             $num = count($data);
-          echo "<tr><td>".$data[0]."</td><td>".$data[1]."<td></tr>";
+          echo "<tr><td>".$data[0]."</td><td>".$data[1]."</td></tr>";
         }
         echo "</table>";
         fclose($handle);
