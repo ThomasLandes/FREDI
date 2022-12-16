@@ -55,6 +55,7 @@ $dbh=db_connect();
       echo "</tr>";
     }
     echo "</table>";
+    echo '<p><a href="index.php">Retour </a>Acceuil</p>';
 
 
 ?>
