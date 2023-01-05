@@ -1,5 +1,6 @@
 <?php
 include 'ini.php';
+include 'menu.php';
 $disable = " ";
 $util = verrif_util($conect);
 if($util != ADMIN){
@@ -24,7 +25,7 @@ if(isset($_GET['message'])){
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>administration</title>
-  <link rel="stylesheet" href="../CSS/styles.css">
+  <link rel="stylesheet" href="../CSS/main.css">
 </head>
 
 <body>

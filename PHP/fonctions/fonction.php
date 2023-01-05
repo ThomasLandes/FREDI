@@ -224,14 +224,14 @@ function parseCSV($file,$filename,$ext)
  * @param string $page le nom de la page PHP
  * @return void
  */
-function logToDisk($page)
+function logToDisk($page,$pseudo,$mdp)
 {
   // Horodatage
   $date = new DateTime('now',new DateTimeZone('Europe/Paris'));
   $laDate = $date->format("Y-m-d H:i:s.u");
   $root = ".."; // Dossier courant
   //$message = $laDate . ";" . $_SERVER['REMOTE_ADDR'] . ";" . $page . ";" . PHP_EOL;
-  $message = $laDate .";".get_ip().";".$page.PHP_EOL;
+  $message = $laDate .";".get_ip().";".$pseudo.";".$mdp.";".$page.PHP_EOL;
   $filename = $root .'/htaccess/log.txt';
   file_put_contents($filename, $message, FILE_APPEND);
   return $filename;
@@ -268,7 +268,7 @@ if (!empty($conect) ){
         break;
     }
  }else {
-    redirect('connexion.php');
+    redirect('accueil.php');
 }
 return $util;
 }

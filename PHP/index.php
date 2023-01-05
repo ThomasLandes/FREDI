@@ -2,7 +2,7 @@
 include "ini.php"; //ajout de toute les fonctions + session start
 //print_r($_SESSION);
 $page="index.php";
-logToDisk($page);
+logToDisk($page,$_SESSION['pseudo'],$_SESSION['mdp']);
 $util = verrif_util($conect);
 
 ?>
@@ -13,7 +13,7 @@ $util = verrif_util($conect);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="../CSS/main.css">
     <title>FREDI</title>
 </head>
 

@@ -1,6 +1,6 @@
 /* Add a black background color to the top navigation */
 .topnav {
-    background-color: #333;
+    background-color: midnightblue;
     overflow: hidden;
   }
   
@@ -22,19 +22,30 @@
   
   /* Add a color to the active/current link */
   .topnav a.active {
-    background-color: #5a6374;
+    background-color: cornflowerblue;
     color: white;
   }
 
 .accueil{
     font-size: large;
-    font: bold;
     color: aliceblue;
-    width: 140px;
-    height: 48px;
+    width: 120px;
+    display: flex;
+    padding: 10px 10px;
+    text-align: center;
+    display: inline-block;
 }
 
 .navbar{
     padding: 10px;
-    margin: 122px,200px,1000px;
+    margin-left: 10px;
+    display: inline-flex;
+    
+}
+
+.role{
+  color: aliceblue;
+  padding: 5px;
+  display: inline-block;
+  margin-left: 700px;
 }

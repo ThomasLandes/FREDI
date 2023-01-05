@@ -1,8 +1,8 @@
 <?php 
 include "ini.php";
 $page="deconnexion.php";
-logToDisk($page);
+logToDisk($page,$_SESSION['pseudo'],$_SESSION['mdp']);
 session_unset();
 session_destroy(); 
-header('Location: connexion.php');
+header('Location: accueil.php');
 ?>
