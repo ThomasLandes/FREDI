@@ -36,6 +36,7 @@ if ($submit) {
         ":MontantTotal" => $MontantTotal,
         ":id_note" => $idnote,
         ":id_motif" => $id_motif
+        
 
     );
     try {
@@ -82,5 +83,5 @@ if ($submit) {
 <?php
 echo '<p><a href="index.php">Retour </a>Acceuil</p>';
 ?>
-</body>
+</body>          
 </html>
