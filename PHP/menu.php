@@ -12,8 +12,6 @@
 <div class="topnav">
     <div class="accueil">FREDI</div>
         <div class="navbar"> 
-        
-            <a  href="inscription.php"> Inscription</a>
             <a  href="connexion.php"> Connexion</a>
             <a  href="deconnexion.php"> Deconnexion</a>
             <a href="ListeNote.php"> Liste des notes</a>

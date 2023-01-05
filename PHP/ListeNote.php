@@ -1,5 +1,6 @@
 <?php
 include "ini.php";
+include "menu.php";
 
 // Connexion à la base
 $dbh=db_connect();
