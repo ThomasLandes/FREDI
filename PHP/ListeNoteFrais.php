@@ -1,5 +1,7 @@
 
 <?php
+
+// 2 :admin 1 :
 include "ini.php";
 $util = verrif_util($conect) ;
 
