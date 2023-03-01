@@ -7,10 +7,11 @@ $util = verrif_util($conect) ;
 
 $id_note = isset($_GET['id_note']) ? $_GET['id_note'] : null;
 
+
 // Connexion à la base
 $dbh=db_connect();
 
-  $sql = ' SELECT datedeplacement,libDeplacement,kilometrage,fraisPeage,fraisRepas,fraisHeberge,montantTot from lignefrais where id_note = :id_note ;';
+  $sql = ' SELECT idligne,datedeplacement,libDeplacement,kilometrage,fraisPeage,fraisRepas,fraisHeberge,montantTot from lignefrais where id_note = :id_note ;';
 
   $params = array(
     ":id_note" =>  $id_note,
@@ -51,7 +52,7 @@ $dbh=db_connect();
 <?php
 
     echo '<table>';
-    echo '<tr><th>DateDeplacement</th><th>libDeplacement</th><th>Kilometrage</th><th>FraisPeage</th><th>FraisRepas</th><th>FraisHeberge</th><th>MontantTot</th><th>Ajouter</tr>';
+    echo '<tr><th>DateDeplacement</th><th>libDeplacement</th><th>Kilometrage</th><th>FraisPeage</th><th>FraisRepas</th><th>FraisHeberge</th><th>MontantTot</th></tr>';
     
    
     foreach ($rows as $row)
@@ -65,6 +66,7 @@ $dbh=db_connect();
       echo '<td>'.$row['fraisRepas'].'</td>';
       echo '<td>'.$row['fraisHeberge'].'</td>';
       echo '<td>'.$row['montantTot'].'</td>';
+      echo '<td><a href="ModifierNoteFrais.php?idligne='.$row['idligne'].'">Modifier </a></td>';
       echo "</tr>";
     }
     echo "</table>";

@@ -2,8 +2,8 @@
 $dbh = db_connect();
 
 
-$id_note = isset($_GET['id_note']) ? $_GET['id_note'] : 3;
-$idligne = isset($_GET['idligne']) ? $_GET['idligne'] : null;
+
+
 
 
 
@@ -12,21 +12,19 @@ $idligne = isset($_GET['idligne']) ? $_GET['idligne'] : null;
 // Lecture du formulaire
 $datedeplacement  = isset($_POST['date']) ? $_POST['date'] : '';
 $kilometrage = isset($_POST['kilometrage']) ? $_POST['kilometrage'] : '';
-$libdeplacement = isset($_POST['deplacement']) ? $_POST['deplacement'] : '';
+$libdeplacement = isset($_POST['libdeplacement']) ? $_POST['libdeplacement'] : '';
 $FraisPeage = isset($_POST['FraisPeage']) ? $_POST['FraisPeage'] : '';
 $FraisRepas = isset($_POST['FraisRepas']) ? $_POST['FraisRepas'] : '';
 $FraisHeberge = isset($_POST['FraisHeberge']) ? $_POST['FraisHeberge'] : '';
 $FraisKilometre = isset($_POST['FraisKilometre']) ? $_POST['FraisKilometre'] : '';
-$MontantTotal = isset($_POST['MontantTotal']) ? $_POST['MontantTotal'] : '';
-$idnote = isset($_POST['id_note']) ? $_POST['id_note'] : '';
-$id_motif = isset($_POST['Motif']) ? $_POST['Motif'] : '';
-$id_note = isset($_GET['id_note']) ? $_GET['id_note'] : null;
+$idligne = isset($_GET['idligne']) ? $_GET['idligne'] : 2 ;
+
 
 $submit = isset($_POST['submit']);
 
 
 if ($submit) {
-    $sql = "UPDATE lignefrais SET datedeplacement = :datedeplacement, libdeplacement = :libdeplacement  , kilometrage = :kilometrage , fraisPeage = :FraisPeage , fraisRepas = :FraisRepas , fraisHeberge = :FraisHeberge , FraisKilometre = :FraisKilometre , montantTot = MontantTotal where idligne = :idligne;";
+    $sql = "UPDATE lignefrais SET datedeplacement = :datedeplacement, libDeplacement = :libdeplacement  , kilometrage = :kilometrage , fraisPeage = :FraisPeage , fraisRepas = :FraisRepas , fraisHeberge = :FraisHeberge , FraisKilometre = :FraisKilometre  where idligne = :idligne;";
 
     $params = array(
    
@@ -37,9 +35,7 @@ if ($submit) {
         ":FraisRepas" => $FraisRepas,
         ":FraisHeberge" => $FraisHeberge,
         ":FraisKilometre" => $FraisKilometre,
-        ":MontantTotal" => $MontantTotal,
-        ":id_note" => $idnote,
-        ":id_motif" => $id_motif
+        ":idligne" => $idligne
 
 
     );
@@ -50,18 +46,25 @@ if ($submit) {
     } catch (PDOException $e) {
         die("<p>Erreur lors de la requête SQL : " . $e->getMessage() . "</p>");
     }
-    header("Location: ListeNoteFrais.php?id_note=".$idnote."");
+    header("Location: ListeNoteFrais.php?id_note=2");
 } else {
-    // Formulaire non encore validé : on affiche l'enregistrement
-    $sql = ' SELECT datedeplacement,libDeplacement,kilometrage,fraisPeage,fraisRepas,fraisHeberge,FraisKilometre,montantTot from lignefrais where idligne = :idligne ;';
-
-  $params = array(
-    ":idligne" =>  $idligne,
-    );
+   
     try {
+        // Récupération des données de la ligne de frais
+        $sql = "SELECT * FROM lignefrais WHERE idligne = :idligne";
+        $params = array(":idligne" => $idligne);
         $sth = $dbh->prepare($sql);
         $sth->execute($params);
         $row = $sth->fetch(PDO::FETCH_ASSOC);
+
+        // Remplissage des champs du formulaire avec les données de la ligne de frais
+        $date = $row['datedeplacement'];
+        $lib = $row['libDeplacement'];
+        $kilo = $row['kilometrage'];
+        $FraisP = $row['fraisPeage'];
+        $FraisR= $row['fraisRepas'];
+        $FraisH = $row['fraisHeberge'];
+        $FraisK= $row['FraisKilometre'];
     } catch (PDOException $e) {
         die("<p>Erreur lors de la requête SQL : " . $e->getMessage() . "</p>");
     }
@@ -83,18 +86,15 @@ if ($submit) {
 
 
 <form action=<?php echo $_SERVER['PHP_SELF'];?> " method="post">
-  <p>Date Deplacement<br /><input type="date" name="date" value = "<?php echo $datedeplacement ?>"  ></p>
-  <p>Lib Deplacement<br /><input type="text" name="deplacement" value = "<?php echo $libdeplacement ?>"></p>
-  <p>Kilometrage<br /><input type="text" name="kilometrage" value = "<?php echo $kilometrage ?>" ></p>
-  <p>FraisPeage<br /><input type="text" name="FraisPeage" value = "<?php echo $FraisPeage  ?>" ></p>
-  <p>FraisRepas<br /><input type="text" name="FraisRepas"  value = "<?php echo $FraisRepas  ?>" ></p>
-  <p>FraisHeberge<br /><input type="text" name="FraisHeberge"  value = "<?php echo $FraisHeberge  ?>" ></p>
-  <p>FraisKilometre<br /><input type="text" name="FraisKilometre"  value = "<?php echo $FraisKilometre  ?>"></p>
-  <p>MontantTotal<br /><input type="text" name="MontantTotal" value = "<?php echo $MontantTotal ?>" ></p>
-
+  <p>Date Deplacement<br /><input type="date" name="date" value = "<?php echo $date?>"  ></p>
+  <p>Lib Deplacement<br /><input type="text" name="libdeplacement" value = "<?php echo $lib ?>"></p>
+  <p>Kilometrage<br /><input type="text" name="kilometrage" value = "<?php echo $kilo ?>" ></p>
+  <p>FraisPeage<br /><input type="text" name="FraisPeage" value = "<?php echo $FraisP  ?>" ></p>
+  <p>FraisRepas<br /><input type="text" name="FraisRepas"  value = "<?php echo $FraisR  ?>" ></p>
+  <p>FraisHeberge<br /><input type="text" name="FraisHeberge"  value = "<?php echo $FraisH ?>" ></p>
+  <p>FraisKilometre<br /><input type="text" name="FraisKilometre"  value = "<?php echo $FraisK  ?>"></p>
   <p><input type="submit" name="submit" value="OK"></p>
 </form>
-
 
 
     

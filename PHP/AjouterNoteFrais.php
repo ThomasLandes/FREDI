@@ -48,7 +48,7 @@ if ($submit) {
     } catch (PDOException $e) {
         die("<p>Erreur lors de la requête SQL : " . $e->getMessage() . "</p>");
     }
-    header("Location: ListeNoteFrais.php?id_note=".$idnote."");
+  
 } 
 
 
@@ -85,5 +85,20 @@ if ($submit) {
 <?php
 echo '<p><a href="index.php">Retour </a>Acceuil</p>';
 ?>
-</body>          
-</html>
+</body>  
+<html>
+
+<?php
+
+// Trigger pour calculer automatiquement le Montant Total 
+/** 
+ DELIMITER |
+CREATE TRIGGER `calcul_montant_total` BEFORE INSERT ON `lignefrais`
+ FOR EACH ROW 
+ BEGIN
+  SET NEW.MontantTot = NEW.FraisPeage + NEW.FraisRepas + NEW.FraisHeberge + NEW.FraisKilometre;
+END |
+DELIMITER ; 
+*/
+?>
+
