@@ -10,43 +10,49 @@ $dbh = db_connect();
 
 
 // Lecture du formulaire
-$datedeplacement  = isset($_POST['date']) ? $_POST['date'] : '';
-$kilometrage = isset($_POST['kilometrage']) ? $_POST['kilometrage'] : '';
-$libdeplacement = isset($_POST['libdeplacement']) ? $_POST['libdeplacement'] : '';
-$FraisPeage = isset($_POST['FraisPeage']) ? $_POST['FraisPeage'] : '';
-$FraisRepas = isset($_POST['FraisRepas']) ? $_POST['FraisRepas'] : '';
-$FraisHeberge = isset($_POST['FraisHeberge']) ? $_POST['FraisHeberge'] : '';
-$FraisKilometre = isset($_POST['FraisKilometre']) ? $_POST['FraisKilometre'] : '';
-$idligne = isset($_GET['idligne']) ? $_GET['idligne'] : 2 ;
-
-
+$idnote = isset($_GET['idnote']) ? $_GET['idnote'] : null;
+$idligne = isset($_GET['idligne']) ? $_GET['idligne'] : null;
 $submit = isset($_POST['submit']);
 
 
 if ($submit) {
-    $sql = "UPDATE lignefrais SET datedeplacement = :datedeplacement, libDeplacement = :libdeplacement  , kilometrage = :kilometrage , fraisPeage = :FraisPeage , fraisRepas = :FraisRepas , fraisHeberge = :FraisHeberge , FraisKilometre = :FraisKilometre  where idligne = :idligne;";
+    
+    $idnote = isset($_POST['idnote'])? $_POST['idnote'] : null;
+    $idligne = isset($_POST['idligne'])? $_POST['idligne'] : null;
+ $datedeplacement  = isset($_POST['date']) ? $_POST['date'] : null;
+$kilometrage = isset($_POST['kilometrage']) ? $_POST['kilometrage'] : null;
+$libdeplacement = isset($_POST['libdeplacement']) ? $_POST['libdeplacement'] : null;
+$FraisPeage = isset($_POST['FraisPeage']) ? $_POST['FraisPeage'] : null;
+$FraisRepas = isset($_POST['FraisRepas']) ? $_POST['FraisRepas'] : null;
+$FraisHeberge = isset($_POST['FraisHeberge']) ? $_POST['FraisHeberge'] : null;
+$FraisKilometre = isset($_POST['FraisKilometre']) ? $_POST['FraisKilometre'] : null;
+
+
+echo $idnote;
+    $sql = "UPDATE lignefrais SET datedeplacement = :datedeplacement, libDeplacement = :libdeplacement  , kilometrage = :kilometrage , fraisPeage = :FraisPeage , fraisRepas = :FraisRepas , fraisHeberge = :FraisHeberge , FraisKilometre = :FraisKilometre  where idligne = :idligne";
 
     $params = array(
-   
+        ":idligne" => $idligne,
         ":datedeplacement" => $datedeplacement,
         ":libdeplacement" =>$libdeplacement,
         ":kilometrage" => $kilometrage,
         ":FraisPeage" => $FraisPeage,
         ":FraisRepas" => $FraisRepas,
         ":FraisHeberge" => $FraisHeberge,
-        ":FraisKilometre" => $FraisKilometre,
-        ":idligne" => $idligne
+        ":FraisKilometre" => $FraisKilometre
+     
 
 
     );
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     try {
         $sth = $dbh->prepare($sql);
         $sth->execute($params);
-        $nb = $sth->rowcount();
     } catch (PDOException $e) {
         die("<p>Erreur lors de la requête SQL : " . $e->getMessage() . "</p>");
     }
-    header("Location: ListeNoteFrais.php?id_note=2");
+    header("Location: ListeNoteFrais.php?id_note=$idnote");
+     
 } else {
    
     try {
@@ -86,6 +92,8 @@ if ($submit) {
 
 
 <form action=<?php echo $_SERVER['PHP_SELF'];?> " method="post">
+<p><input type="hidden" name="idnote" value="<?php echo $idnote; ?>"></p>
+<p><input type="hidden" name="idligne" value="<?php echo $idligne; ?>"></p>
   <p>Date Deplacement<br /><input type="date" name="date" value = "<?php echo $date?>"  ></p>
   <p>Lib Deplacement<br /><input type="text" name="libdeplacement" value = "<?php echo $lib ?>"></p>
   <p>Kilometrage<br /><input type="text" name="kilometrage" value = "<?php echo $kilo ?>" ></p>
@@ -96,7 +104,5 @@ if ($submit) {
   <p><input type="submit" name="submit" value="OK"></p>
 </form>
 
-
-    
 </body>
 </html>
