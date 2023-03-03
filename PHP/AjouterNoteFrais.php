@@ -48,6 +48,8 @@ if ($submit) {
     } catch (PDOException $e) {
         die("<p>Erreur lors de la requête SQL : " . $e->getMessage() . "</p>");
     }
+
+    header("Location: ListeNoteFrais.php?id_note=$idnote");
   
 } 
 
@@ -64,7 +66,7 @@ if ($submit) {
 </head>
 <body>
 
-
+<h1>Ajouter une note</h1>
 
 <form action=<?php echo $_SERVER['PHP_SELF'];?> " method="post">
   <p>Date Deplacement<br /><input type="date" name="date" ></p>
@@ -84,6 +86,7 @@ if ($submit) {
 </form>
 <?php
 echo '<p><a href="index.php">Retour </a>Acceuil</p>';
+echo '<p><a href="ListeNoteFrais.php?id_note=' . $id_note . '">Retour </a>ListeNote</p>';
 ?>
 </body>  
 <html>

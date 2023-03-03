@@ -89,7 +89,7 @@ echo $idnote;
 </head>
 <body>
 
-
+<h1>Modifier la note</h1>
 
 <form action=<?php echo $_SERVER['PHP_SELF'];?> " method="post">
 <p><input type="hidden" name="idnote" value="<?php echo $idnote; ?>"></p>
@@ -103,6 +103,8 @@ echo $idnote;
   <p>FraisKilometre<br /><input type="text" name="FraisKilometre"  value = "<?php echo $FraisK  ?>"></p>
   <p><input type="submit" name="submit" value="OK"></p>
 </form>
-
+<?php
+echo '<p><a href="ListeNoteFrais.php?id_note=' . $idnote . '">Retour </a>ListeNote</p>';
+?>
 </body>
 </html>
