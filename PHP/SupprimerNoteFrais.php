@@ -1,4 +1,6 @@
-<?php include "ini.php" ;
+<?php 
+include "ini.php";
+include "menu.php";
 $dbh = db_connect();
 
 
