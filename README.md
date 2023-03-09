@@ -50,7 +50,7 @@ pour changer le type d'utilisateur il faut le faire manuellmeent via la table ut
 Lancez l’application en allant dans : FREDI/PHP/index.php
 Si vous n’êtes pas connecté (ce qui sera le cas) vous êtes redirigé vers connexion.php. Commencez par créer votre compte en cliquant sur ‘inscrivez-vous’. 
 Pour information, le mot de passe doit contenir 8 caractères dont au minimum une majuscule, une minuscule, un chiffre et un caractère spécial.
-Retournez ensuite sur la page de connexion et entrez les identifiants saisis lors de l’inscription.
+Retournez ensuite sur la page de connexion et entrez les identifiants saisis lors de l’inscription. ATTENTION!!! Si vous rencontrez un problème, il se peut que votre mot de passe contienne des caractères non supportés, comme "&" .
 Vous pouvez maintenant accéder à index.php
 
 4.)	Log.txt
