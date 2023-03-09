@@ -43,9 +43,6 @@ echo $mess;
   parseCSV($file,$filename2,".csv");
   echo "<br><br>";
   parseCSV($file,$filename3,".csv");
-  echo "<div>";
-  echo "<table><tr><th>Id</th>><th>Id</th>";
-  echo "</div>";
   ?>
 </body>
 </html>
