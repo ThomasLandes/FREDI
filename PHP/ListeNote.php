@@ -1,17 +1,37 @@
 <?php
 include "ini.php";
+
+$util = verrif_util($conect) ;
 include "menu.php";
 
 // Connexion à la base
 $dbh=db_connect();
 
-  $sql = ' SELECT id_note,montanttot,dateNote,validite,numordre from notefrais , utilisateur where utilisateur.idutil = notefrais.idutil and utilisateur.idutil = :idutil;';
+
+
+
+if($util == CONTROLER){
+
+
+    $sql = '  SELECT * from notefrais,periodef where notefrais.idperiode = periodef.idperiode and periodef.is_actif = 1';
+$params = array();
+} 
+
+ if($util == DEFAULT_USER){
+      
+  $sql = ' SELECT * from notefrais , utilisateur,periodef where utilisateur.idutil = notefrais.idutil AND periodef.idperiode = notefrais.idperiode and utilisateur.idutil = :idutil;';
 
   $params = array(
       ":idutil" =>  $_SESSION['id'],
   );
 
+ }
+  if($util == ADMIN){
+ 
+    redirect('error/error.php');
   
+} 
+
 
   try {
       $sth = $dbh->prepare($sql);
@@ -41,22 +61,34 @@ $dbh=db_connect();
 <?php
 
     echo '<table>';
-    echo '<tr><th>Ordre</th><th>Montant</th><th>Date</th><th>Validite</th></tr>';
+    echo '<tr><th>Ordre</th><th>Montant</th><th>Date</th><th>Validite</th><th>Voir ligne Frais</th></tr>';
     
    
     foreach ($rows as $row)
     {
        
       echo '<tr>';
-      echo '<td>'.$row['numordre'].'</td>';
-      echo "<td>".$row['montanttot']."</td>";
+      echo '<td>'.$row['numOrdre'].'</td>';
+      echo "<td>".$row['montantTot']."</td>";
       echo '<td>'.$row['dateNote'].'</td>';
       echo '<td>'.$row['validite'].'</td>';
-      echo '<td>[<a href="ListeNoteFrais.php?id_note=' . $row['id_note'] . '">Voir liste note de frais</a>]';
+
+      if ($row['is_actif'] == 1 && $util == DEFAULT_USER ) {
+        echo '<td>[<a href="ListeNoteFrais.php?id_note=' . $row['id_note'] . '">Voir liste note de frais</a>]';
+      }
+
+      if ($row['is_actif'] == 0 && $util == DEFAULT_USER ) {
+        echo '<td>Periode Non active</td>';
+      }
+
+      if ($util == CONTROLER ) {
+        echo '<td>Acces Interdit</td>';
+      }
+        }
       echo "</tr>";
-    }
     echo "</table>";
     echo '<p><a href="index.php">Retour </a>Acceuil</p>';
+    
 
 
 ?>
