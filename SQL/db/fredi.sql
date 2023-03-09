@@ -115,7 +115,8 @@ CREATE TABLE `notefrais` (
   `montantTot` float NOT NULL,
   `dateNote` date NOT NULL,
   `numOrdre` int(11) NOT NULL,
-  `idutil` int(11) NOT NULL
+  `idutil` int(11) NOT NULL,
+  `idperiode` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -127,8 +128,7 @@ CREATE TABLE `notefrais` (
 CREATE TABLE `periodef` (
   `idperiode` int(11) NOT NULL,
   `libelleperiode` int(11) NOT NULL,
-  `montant` float NOT NULL,
-  `id_note` int(11) NOT NULL
+  `montant` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -193,15 +193,14 @@ ALTER TABLE `motif`
 --
 ALTER TABLE `notefrais`
   ADD PRIMARY KEY (`id_note`),
-  ADD KEY `NoteFrais_utilisateur_FK` (`idutil`);
-
+  ADD KEY `NoteFrais_utilisateur_FK` (`idutil`),
+  ADD KEY `NoteFrais_periodef` (`idperiode`);
 --
 -- Index pour la table `periodef`
 --
 ALTER TABLE `periodef`
-  ADD PRIMARY KEY (`idperiode`),
-  ADD KEY `PeriodeF_NoteFrais_FK` (`id_note`);
-
+  ADD PRIMARY KEY (`idperiode`);
+  
 --
 -- Index pour la table `utilisateur`
 --
@@ -289,13 +288,9 @@ ALTER TABLE `lignefrais`
 -- Contraintes pour la table `notefrais`
 --
 ALTER TABLE `notefrais`
-  ADD CONSTRAINT `NoteFrais_utilisateur_FK` FOREIGN KEY (`idutil`) REFERENCES `utilisateur` (`idutil`);
+  ADD CONSTRAINT `NoteFrais_utilisateur_FK` FOREIGN KEY (`idutil`) REFERENCES `utilisateur` (`idutil`),
+  ADD CONSTRAINT `NoteFrais_periodef_FK` FOREIGN KEY (`idperiode`) REFERENCES `periodef` (`idperiode`);
 
---
--- Contraintes pour la table `periodef`
---
-ALTER TABLE `periodef`
-  ADD CONSTRAINT `PeriodeF_NoteFrais_FK` FOREIGN KEY (`id_note`) REFERENCES `notefrais` (`id_note`);
 
 --
 -- Contraintes pour la table `utilisateur`

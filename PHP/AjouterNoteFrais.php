@@ -17,13 +17,14 @@ $MontantTotal = isset($_POST['MontantTotal']) ? $_POST['MontantTotal'] : '';
 $idnote = isset($_POST['id_note']) ? $_POST['id_note'] : '';
 $id_motif = isset($_POST['Motif']) ? $_POST['Motif'] : '';
 $id_note = isset($_GET['id_note']) ? $_GET['id_note'] : null;
+$FraisKilometre  = isset($_POST['FraisKilometre']) ? $_POST['FraisKilometre'] : '';
 
 $submit = isset($_POST['submit']);
 
 // Ajout dans la base
 if ($submit) {
-    $sql = "INSERT INTO `lignefrais` ( `datedeplacement`, `libDeplacement`, `kilometrage`, `fraisPeage`, `fraisRepas`, `fraisHeberge`, `montantTot`, `id_note`, `id_motif`) 
-    VALUES ( :datedeplacement, :libdeplacement, :kilometrage, :FraisPeage , :FraisRepas, :FraisHeberge, :MontantTotal, :id_note, :id_motif);";
+    $sql = "INSERT INTO `lignefrais` ( `datedeplacement`, `libDeplacement`, `kilometrage`, `fraisPeage`, `fraisRepas`, `fraisHeberge`, `FraisKilometre`, `id_note`, `id_motif`) 
+    VALUES ( :datedeplacement, :libdeplacement, :kilometrage, :FraisPeage , :FraisRepas, :FraisHeberge, :FraisKilometre, :id_note, :id_motif);";
     
     $params = array(
    
@@ -33,9 +34,10 @@ if ($submit) {
         ":FraisPeage" => $FraisPeage,
         ":FraisRepas" => $FraisRepas,
         ":FraisHeberge" => $FraisHeberge,
-        ":MontantTotal" => $MontantTotal,
+        ":FraisKilometre" => $FraisKilometre,
         ":id_note" => $idnote,
         ":id_motif" => $id_motif
+     
         
 
     );
@@ -46,7 +48,9 @@ if ($submit) {
     } catch (PDOException $e) {
         die("<p>Erreur lors de la requête SQL : " . $e->getMessage() . "</p>");
     }
-    header("Location: ListeNoteFrais.php?id_note=".$idnote."");
+
+    header("Location: ListeNoteFrais.php?id_note=$idnote");
+  
 } 
 
 
@@ -62,7 +66,7 @@ if ($submit) {
 </head>
 <body>
 
-
+<h1>Ajouter une note</h1>
 
 <form action=<?php echo $_SERVER['PHP_SELF'];?> " method="post">
   <p>Date Deplacement<br /><input type="date" name="date" ></p>
@@ -71,7 +75,7 @@ if ($submit) {
   <p>FraisPeage<br /><input type="text" name="FraisPeage" ></p>
   <p>FraisRepas<br /><input type="text" name="FraisRepas" ></p>
   <p>FraisHeberge<br /><input type="text" name="FraisHeberge" ></p>
-  <p>MontantTotal<br /><input type="text" name="MontantTotal" ></p>
+  <p>FraisKilometre<br /><input type="text" name="FraisKilometre" ></p>
   <p>Motif : <select name="Motif">
 <option value="1" selected>Travail</option>
 <option value="2" >Voiture</option>
@@ -82,6 +86,22 @@ if ($submit) {
 </form>
 <?php
 echo '<p><a href="index.php">Retour </a>Acceuil</p>';
+echo '<p><a href="ListeNoteFrais.php?id_note=' . $id_note . '">Retour </a>ListeNote</p>';
 ?>
-</body>          
-</html>
+</body>  
+<html>
+
+<?php
+
+// Trigger pour calculer automatiquement le Montant Total 
+/** 
+ DELIMITER |
+CREATE TRIGGER `calcul_montant_total` BEFORE INSERT ON `lignefrais`
+ FOR EACH ROW 
+ BEGIN
+  SET NEW.MontantTot = NEW.FraisPeage + NEW.FraisRepas + NEW.FraisHeberge + NEW.FraisKilometre;
+END |
+DELIMITER ; 
+*/
+?>
+
