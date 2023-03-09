@@ -1,20 +1,19 @@
 <?php
 include 'ini.php';
-include 'menu.php';
 $disable = " ";
 $util = verrif_util($conect);
 if($util != ADMIN){
   redirect('index.php');
 }
+include 'menu.php';
 $root = "..";
-$file2 = $root . DIRECTORY_SEPARATOR . "CSV\\";
+$file = $root . DIRECTORY_SEPARATOR . "CSV\\";
+
 $filename2 = "clubs";
-$file1 = $root . DIRECTORY_SEPARATOR . "CSV\\";
 $filename1 = "ligues";
-$file3 = $root . DIRECTORY_SEPARATOR . "CSV\\";
 $filename3 = "motifs";
 
-if(isset($_GET['message'])){
+if(isset($_SESSION['message'])){
   $disable = "disabled";
 }
 ?>
@@ -34,14 +33,16 @@ if(isset($_GET['message'])){
   <?php 
 echo "<p>Met à jour les données des table Club, Ligue et Motif à partir des fichier CSV</p><input type=button onclick=window.location.href='charger.php'; value='Charger' $disable >";
 
-$mess = isset($_GET['message'])?$_GET['message'] : ' ';
+$mess = isset($_SESSION['message'])?$_SESSION['message'] : ' ';
 echo $mess;
 ?>
   <h3>Donée des Fichier CSV</h3>
   <?php
-  parseCSV($file1,$filename1,".csv");
-  parseCSV($file2,$filename2,".csv");
-  parseCSV($file3,$filename3,".csv");
+  parseCSV($file,$filename1,".csv");
+  echo "<br><br>";
+  parseCSV($file,$filename2,".csv");
+  echo "<br><br>";
+  parseCSV($file,$filename3,".csv");
   ?>
 </body>
 </html>

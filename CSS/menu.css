@@ -45,7 +45,7 @@
 
 .role{
   color: aliceblue;
-  padding: 5px;
-  display: inline-block;
-  margin-left: 700px;
+  padding: 15px;
+  display: block;
+  float: right;
 }
