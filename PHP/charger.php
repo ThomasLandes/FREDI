@@ -57,10 +57,7 @@ if (($handle3 = fopen($file3, "r")) !== false) {
   fclose($handle3);
 }
 
-$message="les donnée CSV ont été chargé";
+$_SESSION['message']="les donnée CSV ont été chargé";
 
-if(isset($_GET['message'])){
- $_GET['message'] = $message;
-}
-header('Location: administration.php?message='.$message);
+header('Location: administration.php');
 ?>

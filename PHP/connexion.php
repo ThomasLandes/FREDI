@@ -14,10 +14,6 @@ $submit = isset($_POST['submit']);
 
 if ($submit) {
     if (!empty($_POST['mail']) && !empty($_POST['mdp'])) { //Verification de l'existance des variable (et qu'elles ne sont pas vide)
-        $mail = htmlspecialchars($_POST['mail']);
-        $mdp = htmlspecialchars($_POST['mdp']);
-
-        
         $mail = strtolower($mail); // on s'assure que le mail soit en minuscule
         
 
@@ -35,9 +31,9 @@ if ($submit) {
         }
     
         $passwordHash = $result['mdputil'];    
-   
+ 
 
-        if ($nb == 1 && password_verify($mdp, $passwordHash)) { 
+        if ($nb == 1 && password_verify($mdpuncrypt, $passwordHash)) { 
                     $_SESSION['pseudo'] = $result['pseudoutil'];
                     $_SESSION['mail'] = $result['mailutil'];
                     $_SESSION['id'] = $result['idutil'];
