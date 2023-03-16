@@ -44,6 +44,9 @@ if ($submit) {
                    logToDisk($page,$_SESSION['pseudo'],$mdpuncrypt);
 
                     redirect('index.php');
+        }else{
+            $message = "Erreur inscrivez-vous d'abord !";
+            echo "<div class='erreur'><p>" . $message . "</p></div>";
         }
     }
 }

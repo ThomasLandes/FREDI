@@ -18,8 +18,9 @@
                 <a href="deconnexion.php"> Deconnexion</a>
                 <?php
                 if ($util === ADMIN) {
-                    echo "<div><a href='administration.php'>Administration</a></div></div>";
+                    echo "<a href='administration.php'>Administration</a>";
                 }
+                echo "</div>";
                 switch ($util) {
                     case ADMIN:
                         $role = "ADMIN";

@@ -1,6 +1,6 @@
 <?php
 include "ini.php";
-$util = verrif_util($conect);
+
 include "menu.php";
 // Connexion à la base
 $dbh=db_connect();
