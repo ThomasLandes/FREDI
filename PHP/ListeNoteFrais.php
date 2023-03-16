@@ -29,14 +29,7 @@ $dbh=db_connect();
   }
 
 
-
-
-
-
 ?>
-
-
-
 
 
 <!DOCTYPE html>
