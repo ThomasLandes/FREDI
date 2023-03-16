@@ -128,7 +128,8 @@ CREATE TABLE `notefrais` (
 CREATE TABLE `periodef` (
   `idperiode` int(11) NOT NULL,
   `libelleperiode` int(11) NOT NULL,
-  `montant` float NOT NULL
+  `montant` float NOT NULL,
+  `is_actif` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

@@ -1,11 +1,11 @@
 <?php
 include "ini.php";
 
-$util = verrif_util($conect);
-
 include "menu.php";
 // Connexion à la base
 $dbh=db_connect();
+$submit = isset($_POST['submit']);
+$idnote  = isset($_POST['id_note']) ? $_POST['id_note'] : '';
 
 
 
@@ -31,6 +31,17 @@ $params = array();
     redirect('error/error.php');
   
 } 
+if($submit){
+  $sql ='UPDATE notefrais SET validite = 1 WHERE id_note = :id_note';
+ 
+ 
+  $params = array(
+  
+    ":id_note" => $idnote
+);
+
+header("Location: ListeNote.php");
+}
 
 
   try {
@@ -61,9 +72,11 @@ $params = array();
 <?php
 
     echo '<table>';
-    echo '<tr><th>Ordre</th><th>Montant</th><th>Date</th><th>Validite</th><th>Voir ligne Frais</th></tr>';
-    
-   
+    echo '<tr><th>Ordre</th><th>Montant</th><th>Date</th><th>Voir ligne Frais</th>';
+    if ($util == CONTROLER ) {
+    echo"<th>Valide</th>";
+    }
+echo"</tr>";
     foreach ($rows as $row)
     {
        
@@ -71,7 +84,6 @@ $params = array();
       echo '<td>'.$row['numOrdre'].'</td>';
       echo "<td>".$row['montantTot']."</td>";
       echo '<td>'.$row['dateNote'].'</td>';
-      echo '<td>'.$row['validite'].'</td>';
 
       if ($row['is_actif'] == 1 && $util == DEFAULT_USER ) {
         echo '<td>[<a href="ListeNoteFrais.php?id_note=' . $row['id_note'] . '">Voir liste note de frais</a>]';
@@ -84,7 +96,22 @@ $params = array();
       if ($util == CONTROLER ) {
         echo '<td>Acces Interdit</td>';
       }
+
+      // si periode est active et util = controleur
+      if ($row['is_actif'] == 1 && $util == CONTROLER ) {
+        ?><form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+    <td>
+        <?php
+        echo $row['validite'];
+        ?>
+        <input type="checkbox" id="validite" name="id_note" value="<?php echo $row['id_note']; ?>">
+    </td>
+    <td><input type="submit" name="submit" value="Submit"></td>
+</form>
+      <?php 
         }
+        }
+       
       echo "</tr>";
     echo "</table>";
     echo '<p><a href="index.php">Retour </a>Acceuil</p>';
