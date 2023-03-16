@@ -93,7 +93,7 @@ if ($submit) {
                     <p><input type="password" name="mdp" placeholder="Mot de passe" required></p>
                     <p> <input type="hidden" name="idtype" value="1"> </p>
                     <p> <input type="hidden" name="idligue" value="99"> </p>
-                    <p><input type="submit" name="submit" value="S'inscrire"></p>
+                    <p><input onclick=alert() type="submit" name="submit" value="S'inscrire"></p>
                 </form>
             </div>
             <div class="changetype">
@@ -108,9 +108,12 @@ if ($submit) {
                         }
                     }
                 } ?>
-
+<p id="reussi"></p>
     <script>
-        window.alert(Document.getElementById('reussi') );
-    </script>
+        function alert(){
+        $message ="<p class='erreur'>Inscription réussi !</p>"
+        window.alert($message);
+          }
+        </script>
 </body>
 </html>

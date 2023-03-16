@@ -1,11 +1,8 @@
 <?php
 include "ini.php";
-<<<<<<< HEAD
 
-$util = verrif_util($conect) ;
-=======
 $util = verrif_util($conect);
->>>>>>> f5fb2d406dba1ef4fefc2f4571c0a0d3048bb8f7
+
 include "menu.php";
 // Connexion à la base
 $dbh=db_connect();
