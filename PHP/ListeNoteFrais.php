@@ -3,8 +3,9 @@
 
 // 2 :admin 1 :
 include "ini.php";
-include "menu.php";
 $util = verrif_util($conect) ;
+include "menu.php";
+
 
 $id_note = isset($_GET['id_note']) ? $_GET['id_note'] : null;
 
