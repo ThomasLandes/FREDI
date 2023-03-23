@@ -1,7 +1,8 @@
 <?php
 include "ini.php";
-
+$util = verrif_util($conect);
 include "menu.php";
+
 // Connexion à la base
 $dbh=db_connect();
 $submit = isset($_POST['submit']);
@@ -63,18 +64,21 @@ header("Location: ListeNote.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Liste note </title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="../CSS/main.css">
 </head>
 <body>
+  <br>
 <h1>Liste des notes</h1>
-
+<br>
 
 <?php
 
     echo '<table>';
+    if( $util == DEFAULT_USER){
     echo '<tr><th>Ordre</th><th>Montant</th><th>Date</th><th>Voir ligne Frais</th>';
+    }
     if ($util == CONTROLER ) {
-    echo"<th>Valide</th>";
+    echo"<tr><th>Ordre</th><th>Montant</th><th>Date</th><th>Valide</th>";
     }
 echo"</tr>";
     foreach ($rows as $row)
@@ -86,16 +90,13 @@ echo"</tr>";
       echo '<td>'.$row['dateNote'].'</td>';
 
       if ($row['is_actif'] == 1 && $util == DEFAULT_USER ) {
-        echo '<td>[<a href="ListeNoteFrais.php?id_note=' . $row['id_note'] . '">Voir liste note de frais</a>]';
+        echo '<td>[<a href="ListeNoteFrais.php?id_note=' . $row['id_note'] . '">Voir liste note de frais</a>]</td>';
       }
 
       if ($row['is_actif'] == 0 && $util == DEFAULT_USER ) {
         echo '<td>Periode Non active</td>';
       }
 
-      if ($util == CONTROLER ) {
-        echo '<td>Acces Interdit</td>';
-      }
 
       // si periode est active et util = controleur
       if ($row['is_actif'] == 1 && $util == CONTROLER ) {
@@ -105,16 +106,16 @@ echo"</tr>";
         echo $row['validite'];
         ?>
         <input type="checkbox" id="validite" name="id_note" value="<?php echo $row['id_note']; ?>">
-    </td>
-    <td><input type="submit" name="submit" value="Submit"></td>
+    </td></tr>
+    <p style="padding:2px;background-color:gray;float:left;margin-left:500px"><input type="submit" name="submit" value="Submit"></p>
+    <br><br>
 </form>
       <?php 
         }
+
         }
-       
-      echo "</tr>";
     echo "</table>";
-    echo '<p><a href="index.php">Retour </a>Acceuil</p>';
+    echo '<p>Retour à l\'<a href="index.php">Acceuil</a></p>';
     
 
 
