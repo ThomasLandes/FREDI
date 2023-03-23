@@ -5,6 +5,9 @@
 include "ini.php";
 $util = verrif_util($conect) ;
 include "menu.php";
+if($util != DEFAULT_USER){
+  redirect('index.php');
+}
 
 
 $id_note = isset($_GET['id_note']) ? $_GET['id_note'] : null;
@@ -48,7 +51,7 @@ $dbh=db_connect();
 <?php
 
     echo '<table>';
-    echo '<tr><th>DateDeplacement</th><th>libDeplacement</th><th>Kilometrage</th><th>FraisPeage</th><th>FraisRepas</th><th>FraisHeberge</th><th>FraisKilometre</th><th>MontantTot</th></tr>';
+    echo '<tr><th>DateDeplacement</th><th>libDeplacement</th><th>Kilometrage</th><th>FraisPeage</th><th>FraisRepas</th><th>FraisHeberge</th><th>FraisKilometre</th><th>MontantTot</th><th>Actions</th></tr>';
     
    
     foreach ($rows as $row)

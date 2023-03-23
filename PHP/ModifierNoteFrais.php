@@ -27,11 +27,11 @@ $libdeplacement = isset($_POST['libdeplacement']) ? $_POST['libdeplacement'] : n
 $FraisPeage = isset($_POST['FraisPeage']) ? $_POST['FraisPeage'] : null;
 $FraisRepas = isset($_POST['FraisRepas']) ? $_POST['FraisRepas'] : null;
 $FraisHeberge = isset($_POST['FraisHeberge']) ? $_POST['FraisHeberge'] : null;
-$FraisKilometre = isset($_POST['FraisKilometre']) ? $_POST['FraisKilometre'] : null;
+
 
 
 echo $idnote;
-    $sql = "UPDATE lignefrais SET datedeplacement = :datedeplacement, libDeplacement = :libdeplacement  , kilometrage = :kilometrage , fraisPeage = :FraisPeage , fraisRepas = :FraisRepas , fraisHeberge = :FraisHeberge , FraisKilometre = :FraisKilometre  where idligne = :idligne";
+    $sql = "UPDATE lignefrais SET datedeplacement = :datedeplacement, libDeplacement = :libdeplacement  , kilometrage = :kilometrage , fraisPeage = :FraisPeage , fraisRepas = :FraisRepas , fraisHeberge = :FraisHeberge  where idligne = :idligne";
 
     $params = array(
         ":idligne" => $idligne,
@@ -41,7 +41,7 @@ echo $idnote;
         ":FraisPeage" => $FraisPeage,
         ":FraisRepas" => $FraisRepas,
         ":FraisHeberge" => $FraisHeberge,
-        ":FraisKilometre" => $FraisKilometre
+   
      
 
 
@@ -72,7 +72,7 @@ echo $idnote;
         $FraisP = $row['fraisPeage'];
         $FraisR= $row['fraisRepas'];
         $FraisH = $row['fraisHeberge'];
-        $FraisK= $row['FraisKilometre'];
+       
     } catch (PDOException $e) {
         die("<p>Erreur lors de la requête SQL : " . $e->getMessage() . "</p>");
     }
@@ -102,7 +102,7 @@ echo $idnote;
   <p>FraisPeage<br /><input type="text" name="FraisPeage" value = "<?php echo $FraisP  ?>" ></p>
   <p>FraisRepas<br /><input type="text" name="FraisRepas"  value = "<?php echo $FraisR  ?>" ></p>
   <p>FraisHeberge<br /><input type="text" name="FraisHeberge"  value = "<?php echo $FraisH ?>" ></p>
-  <p>FraisKilometre<br /><input type="text" name="FraisKilometre"  value = "<?php echo $FraisK  ?>"></p>
+
   <p><input type="submit" name="submit" value="OK"></p>
 </form>
 <?php
