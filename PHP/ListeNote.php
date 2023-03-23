@@ -5,10 +5,10 @@ include "menu.php";
 
 // Connexion à la base
 $dbh=db_connect();
-$submit = isset($_POST['submit']);
+$submit2 = isset($_POST['submit']);
 $idnote  = isset($_POST['id_note']) ? $_POST['id_note'] : '';
-
-
+$periode = isset($_GET['periode'])? $_GET['periode']:'2019';
+$actif = 0;
 
 
 if($util == CONTROLER){
@@ -16,6 +16,7 @@ if($util == CONTROLER){
 
     $sql = '  SELECT * from notefrais,periodef where notefrais.idperiode = periodef.idperiode and periodef.is_actif = 1';
 $params = array();
+$sql_periode = ' SELECT * from periodef';
 } 
 
  if($util == DEFAULT_USER){
@@ -32,7 +33,7 @@ $params = array();
     redirect('error/error.php');
   
 } 
-if($submit){
+if($submit2){
   $sql ='UPDATE notefrais SET validite = 1 WHERE id_note = :id_note';
  
  
@@ -44,17 +45,33 @@ if($submit){
 header("Location: ListeNote.php");
 }
 
+?>
+<?php
 
-  try {
-      $sth = $dbh->prepare($sql);
-      $sth->execute($params);
-      $rows = $sth->fetchAll(PDO::FETCH_ASSOC);
-  } catch (PDOException $e) {
-      die("<p>Erreur lors de la requête SQL : " . $e->getMessage() . "</p>");
-  }
+$sql_actif = "UPDATE periodef SET is_actif = 0 ;
+                UPDATE periodef SET is_actif = 1 WHERE libelleperiode = ".$periode;  
+try {
+  $sth = $dbh->prepare($sql_actif);
+  $sth->execute($params); 
+} catch (PDOException $e) {
+  die("<p>Erreur lors de la requête SQL : " . $e->getMessage() . "</p>");
+}
 
+try {
+  $sth = $dbh->prepare($sql_periode);
+  $sth->execute($params); 
+  $periodefs = $sth->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+  die("<p>Erreur lors de la requête SQL : " . $e->getMessage() . "</p>");
+}
 
-
+try {
+  $sth = $dbh->prepare($sql);
+  $sth->execute($params);
+  $rows = $sth->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+  die("<p>Erreur lors de la requête SQL : " . $e->getMessage() . "</p>");
+}
 
 ?>
 <!DOCTYPE html>
@@ -68,7 +85,8 @@ header("Location: ListeNote.php");
 </head>
 <body>
   <br>
-<h1>Liste des notes</h1>
+  <div style="padding: 15px;">
+<h1>Liste des periodes</h1>
 <br>
 
 <?php
@@ -78,6 +96,37 @@ header("Location: ListeNote.php");
     echo '<tr><th>Ordre</th><th>Montant</th><th>Date</th><th>Voir ligne Frais</th>';
     }
     if ($util == CONTROLER ) {
+      echo "<table>";
+echo "<tr><th>libellé periode</th><th>Montant</th></tr>";
+foreach($periodefs as $periodef){
+  echo "<tr>";
+  echo "<td>".$periodef['libelleperiode']."</td>";
+  echo "<td>".$periodef['montant']."</td></tr>";
+}
+ echo "</table>";
+
+?>
+<br><br>
+<libel for="periode">Choix periode active</label><br><br>
+<form>
+<select style="float: left;" name="periode" id="periode" onchange="this.form.submit()">
+<?php
+
+  foreach (range('2019', '2023') as $char) {
+    if ($char == $periode) {
+      $selected = "selected";
+    } else {
+      $selected = "";
+    }
+    echo '<option value="' . $char . '" ' . $selected . ' >' . $char . '</option>' . PHP_EOL;
+  }
+?>
+</select>
+</form><br><br>
+
+<h1>Liste des notes</h1>
+<?php
+echo "<table>";
     echo"<tr><th>Ordre</th><th>Montant</th><th>Date</th><th>Valide</th>";
     }
 echo"</tr>";
@@ -103,22 +152,30 @@ echo"</tr>";
         ?><form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
     <td>
         <?php
-        echo $row['validite'];
+        if($row['validite'] == 1 ){
+          $valide = "checked";
+        }else{
+          $valide = "";
+        }
         ?>
-        <input type="checkbox" id="validite" name="id_note" value="<?php echo $row['id_note']; ?>">
+        <input type="checkbox" id="validite" name="id_note" value="<?php echo $row['id_note']; echo $valide; ?>">
     </td></tr>
-    <p style="padding:2px;background-color:gray;float:left;margin-left:500px"><input type="submit" name="submit" value="Submit"></p>
+   
     <br><br>
 </form>
       <?php 
         }
-
+$actif = $row['is_actif'];
         }
     echo "</table>";
+    if( $actif == 1 && $util == CONTROLER ){
+    echo "<p style='padding:2px;background-color:gray;float:left;margin-left:500px'><input type='submit' name='submit2' value='Valider notes'></p>";
+    echo "<br><br>";
+    }
     echo '<p>Retour à l\'<a href="index.php">Acceuil</a></p>';
     
 
 
 ?>
-
+</div>
 </html>
