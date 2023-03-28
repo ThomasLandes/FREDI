@@ -154,7 +154,7 @@ echo"</tr>";
       if ($row['is_actif'] == 1 && $util == CONTROLER ) {
         ?>
     <td>
-    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+    <!--<form action="<?php //echo $_SERVER['PHP_SELF']; ?>" method="post">-->
         <?php
         if($row['validite'] == 1 ){
           $valide = "checked";
@@ -164,9 +164,9 @@ echo"</tr>";
           $valide = "";
         }
         ?>
-        <form method="post">
+        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
         <input type="text" id="id_note" name="id_note" value="<?php echo $row['id_note']; ?>" hidden>
-        <input type="submit" value="<?php echo $row['id_note']; ?>" <?php /*echo $valide." ";*/ echo $disabled ?>>
+        <input type="submit"  <?php /*echo $valide." ";*/ echo $disabled ?>>
         </form>
     </td></tr>
   
