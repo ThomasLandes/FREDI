@@ -7,7 +7,7 @@ include "menu.php";
 $dbh=db_connect();
 $submit2 = isset($_POST['submit']);
 $idnote  = isset($_POST['id_note']) ? $_POST['id_note'] : '';
-$periode = isset($_GET['periode'])? $_GET['periode']:'2019';
+$periode = isset($_GET['periode']) ? $_GET['periode']:'2019';
 $actif = 0;
 
 
@@ -33,6 +33,8 @@ $sql_periode = ' SELECT * from periodef';
     redirect('error/error.php');
   
 } 
+
+echo $submit2;
 if($submit2){
   $sql ='UPDATE notefrais SET validite = 1 WHERE id_note = :id_note';
  
@@ -69,6 +71,7 @@ try {
   $sth = $dbh->prepare($sql);
   $sth->execute($params);
   $rows = $sth->fetchAll(PDO::FETCH_ASSOC);
+  $nb = count($rows);
 } catch (PDOException $e) {
   die("<p>Erreur lors de la requête SQL : " . $e->getMessage() . "</p>");
 }
@@ -124,7 +127,7 @@ foreach($periodefs as $periodef){
 </select>
 </form><br><br>
 
-<h1>Liste des notes</h1>
+<h1>Liste des notes</h1><br>
 <?php
 echo "<table>";
     echo"<tr><th>Ordre</th><th>Montant</th><th>Date</th><th>Valide</th>";
@@ -132,7 +135,7 @@ echo "<table>";
 echo"</tr>";
     foreach ($rows as $row)
     {
-       
+       $id = "id_note".$row['id_note'];
       echo '<tr>';
       echo '<td>'.$row['numOrdre'].'</td>';
       echo "<td>".$row['montantTot']."</td>";
@@ -149,28 +152,33 @@ echo"</tr>";
 
       // si periode est active et util = controleur
       if ($row['is_actif'] == 1 && $util == CONTROLER ) {
-        ?><form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+        ?>
     <td>
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
         <?php
         if($row['validite'] == 1 ){
           $valide = "checked";
+          $disabled = "disabled";
         }else{
+          $disabled = "";
           $valide = "";
         }
         ?>
-        <input type="checkbox" id="validite" name="id_note" value="<?php echo $row['id_note']; echo $valide; ?>">
+        <form method="post">
+        <input type="text" id="id_note" name="id_note" value="<?php echo $row['id_note']; ?>" hidden>
+        <input type="submit" value="<?php echo $row['id_note']; ?>" <?php /*echo $valide." ";*/ echo $disabled ?>>
+        </form>
     </td></tr>
-   
-    <br><br>
-</form>
+  
+
       <?php 
         }
-$actif = $row['is_actif'];
+//$actif = $row['is_actif'];
         }
     echo "</table>";
     if( $actif == 1 && $util == CONTROLER ){
-    echo "<p style='padding:2px;background-color:gray;float:left;margin-left:500px'><input type='submit' name='submit2' value='Valider notes'></p>";
-    echo "<br><br>";
+    //echo "<p style='padding:2px;background-color:gray;float:left;margin-left:500px'><input type='submit' name='submit2' value='Valider notes'></form></p>";
+  //  echo "<br><br>";
     }
     echo '<p>Retour à l\'<a href="index.php">Acceuil</a></p>';
     
