@@ -7,7 +7,7 @@ include "menu.php";
 $dbh=db_connect();
 $submit2 = isset($_POST['submit']);
 $idnote  = isset($_POST['id_note']) ? $_POST['id_note'] : '';
-$periode = isset($_GET['periode']) ? $_GET['periode']:'2019';
+$periode = isset($_GET['periode']) ? $_GET['periode']:'';
 $actif = 0;
 
 
@@ -17,6 +17,13 @@ if($util == CONTROLER){
     $sql = '  SELECT * from notefrais,periodef where notefrais.idperiode = periodef.idperiode and periodef.is_actif = 1';
 $params = array();
 $sql_periode = ' SELECT * from periodef';
+try {
+  $sth = $dbh->prepare($sql_periode);
+  $sth->execute($params); 
+  $periodefs = $sth->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+  die("<p>Erreur lors de la requête SQL : " . $e->getMessage() . "</p>");
+}
 } 
 
  if($util == DEFAULT_USER){
@@ -49,7 +56,7 @@ header("Location: ListeNote.php");
 
 ?>
 <?php
-
+if($util == CONTROLER){
 $sql_actif = "UPDATE periodef SET is_actif = 0 ;
                 UPDATE periodef SET is_actif = 1 WHERE libelleperiode = ".$periode;  
 try {
@@ -59,13 +66,8 @@ try {
   die("<p>Erreur lors de la requête SQL : " . $e->getMessage() . "</p>");
 }
 
-try {
-  $sth = $dbh->prepare($sql_periode);
-  $sth->execute($params); 
-  $periodefs = $sth->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-  die("<p>Erreur lors de la requête SQL : " . $e->getMessage() . "</p>");
 }
+
 
 try {
   $sth = $dbh->prepare($sql);
