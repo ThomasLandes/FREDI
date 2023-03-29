@@ -17,14 +17,14 @@ $MontantTotal = isset($_POST['MontantTotal']) ? $_POST['MontantTotal'] : '';
 $idnote = isset($_POST['id_note']) ? $_POST['id_note'] : '';
 $id_motif = isset($_POST['Motif']) ? $_POST['Motif'] : '';
 $id_note = isset($_GET['id_note']) ? $_GET['id_note'] : null;
-$FraisKilometre  = isset($_POST['FraisKilometre']) ? $_POST['FraisKilometre'] : '';
+
 
 $submit = isset($_POST['submit']);
 
 // Ajout dans la base
 if ($submit) {
-    $sql = "INSERT INTO `lignefrais` ( `datedeplacement`, `libDeplacement`, `kilometrage`, `fraisPeage`, `fraisRepas`, `fraisHeberge`, `FraisKilometre`, `id_note`, `id_motif`) 
-    VALUES ( :datedeplacement, :libdeplacement, :kilometrage, :FraisPeage , :FraisRepas, :FraisHeberge, :FraisKilometre, :id_note, :id_motif);";
+    $sql = "INSERT INTO `lignefrais` ( `datedeplacement`, `libDeplacement`, `kilometrage`, `fraisPeage`, `fraisRepas`, `fraisHeberge`, `id_note`, `id_motif`) 
+    VALUES ( :datedeplacement, :libdeplacement, :kilometrage, :FraisPeage , :FraisRepas, :FraisHeberge, :id_note, :id_motif);";
     
     $params = array(
    
@@ -34,7 +34,6 @@ if ($submit) {
         ":FraisPeage" => $FraisPeage,
         ":FraisRepas" => $FraisRepas,
         ":FraisHeberge" => $FraisHeberge,
-        ":FraisKilometre" => $FraisKilometre,
         ":id_note" => $idnote,
         ":id_motif" => $id_motif
      
@@ -75,7 +74,6 @@ if ($submit) {
   <p>FraisPeage<br /><input type="text" name="FraisPeage" ></p>
   <p>FraisRepas<br /><input type="text" name="FraisRepas" ></p>
   <p>FraisHeberge<br /><input type="text" name="FraisHeberge" ></p>
-  <p>FraisKilometre<br /><input type="text" name="FraisKilometre" ></p>
   <p>Motif : <select name="Motif">
 <option value="1" selected>Travail</option>
 <option value="2" >Voiture</option>

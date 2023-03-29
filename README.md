@@ -38,7 +38,7 @@ Le projet est prêt à être utilisé.
 
 2.) Gestion type utilisateur
 
-pour changer le type d'utilisateur il faut le faire manuellmeent via la table utilisateur, au niveau du champ typeutil : 
+pour changer le type d'utilisateur il faut le faire manuellement via la table utilisateur, au niveau du champ typeutil : 
   -1 adhérent
   -2 admin
   -3 controleur
