@@ -90,9 +90,7 @@ try {
 </head>
 <body>
   <br>
-  <div style="padding: 15px;">
-<h1>Liste des periodes</h1>
-<br>
+
 
 <?php
 
@@ -101,6 +99,8 @@ try {
     echo '<tr><th>Ordre</th><th>Montant</th><th>Date</th><th>Voir ligne Frais</th>';
     }
     if ($util == CONTROLER ) {
+      echo "<div style='padding: 15px;''>";
+      echo "<h1>Liste des periodes</h1>";
       echo "<table>";
 echo "<tr><th>libellé periode</th><th>Montant</th></tr>";
 foreach($periodefs as $periodef){
@@ -116,7 +116,7 @@ foreach($periodefs as $periodef){
 <form>
 <select style="float: left;" name="periode" id="periode" onchange="this.form.submit()">
 <?php
-if( isset($_GET['periode'])){
+
   foreach (range('2019', '2023') as $char) {
     if ($char == $periode) {
       $selected = "selected";
@@ -125,13 +125,14 @@ if( isset($_GET['periode'])){
     }
     echo '<option value="' . $char . '" ' . $selected . ' >' . $char . '</option>' . PHP_EOL;
   }
-}
+    }
 ?>
 </select>
 </form><br><br>
 
 <h1>Liste des notes</h1><br>
 <?php
+  if ($util == CONTROLER ) {
 echo "<table>";
     echo"<tr><th>Ordre</th><th>Montant</th><th>Date</th><th>Valide</th>";
     }
@@ -173,7 +174,6 @@ echo"</tr>";
         </form>
     </td></tr>
   
-
       <?php 
         }
 //$actif = $row['is_actif'];
@@ -183,6 +183,8 @@ echo"</tr>";
     //echo "<p style='padding:2px;background-color:gray;float:left;margin-left:500px'><input type='submit' name='submit2' value='Valider notes'></form></p>";
   //  echo "<br><br>";
     }
+
+    echo "<br><p><a href='AjouterNoteFrais.php'>Ajouter</a> une ligne de frais</p><br>";
     echo '<p>Retour à l\'<a href="index.php">Acceuil</a></p>';
     
 

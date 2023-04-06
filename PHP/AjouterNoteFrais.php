@@ -67,7 +67,7 @@ if ($submit) {
 
 <h1>Ajouter une note</h1>
 
-<form action=<?php echo $_SERVER['PHP_SELF'];?> " method="post">
+<form action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
   <p>Date Deplacement<br /><input type="date" name="date" ></p>
   <p>Lib Deplacement<br /><input type="text" name="deplacement" ></p>
   <p>Kilometrage<br /><input type="text" name="kilometrage" ></p>
@@ -89,17 +89,5 @@ echo '<p><a href="ListeNoteFrais.php?id_note=' . $id_note . '">Retour </a>ListeN
 </body>  
 <html>
 
-<?php
 
-// Trigger pour calculer automatiquement le Montant Total 
-/** 
- DELIMITER |
-CREATE TRIGGER `calcul_montant_total` BEFORE INSERT ON `lignefrais`
- FOR EACH ROW 
- BEGIN
-  SET NEW.MontantTot = NEW.FraisPeage + NEW.FraisRepas + NEW.FraisHeberge + NEW.FraisKilometre;
-END |
-DELIMITER ; 
-*/
-?>
 
