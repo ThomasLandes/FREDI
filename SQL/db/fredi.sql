@@ -74,79 +74,6 @@ CREATE TABLE `lignefrais` (
   `id_motif` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Déclencheurs `lignefrais`
---
-DELIMITER $$
-CREATE TRIGGER `before_delete_lignefrais` BEFORE DELETE ON `lignefrais` FOR EACH ROW BEGIN
-  UPDATE notefrais
-  SET montantTot = (
-    SELECT SUM(FraisPeage + FraisRepas + FraisHeberge + FraisKilometre) - old.montantTot
-    FROM lignefrais
-    WHERE lignefrais.id_note = notefrais.id_note
-  )
-  WHERE notefrais.id_note = OLD.id_note;
-END
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `before_update_lignefrais` BEFORE UPDATE ON `lignefrais` FOR EACH ROW BEGIN
-declare v_montant int;
-declare v_fraiskilo int ; 
-select montant into v_montant from periodef where is_actif = 1;
-
-
-SET v_fraiskilo = NEW.kilometrage * v_montant;
-
-SET NEW.FraisKilometre = v_fraiskilo;
-
-
-  SET NEW.MontantTot = NEW.FraisPeage + NEW.FraisRepas + NEW.FraisHeberge + NEW.FraisKilometre;
-
-
-
- UPDATE notefrais SET MontantTot = (
-    SELECT SUM(montantTot) - new.MontantTot
-    FROM lignefrais
-    WHERE id_note = NEW.id_note
-) WHERE id_note = NEW.id_note;
-
-END
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `calcul_montant_total` BEFORE INSERT ON `lignefrais` FOR EACH ROW BEGIN
-
-declare v_montantnote int ;
-declare v_montant int;
-declare v_fraiskilo int ; 
-declare v_nbligne int ;
-
-select montant into v_montant from periodef where is_actif = 1;
-
-select count(*) into v_nbligne from lignefrais where id_note = new.id_note;
-
-SET v_fraiskilo = NEW.kilometrage * v_montant;
-
-SET NEW.FraisKilometre = v_fraiskilo;
-
- SET NEW.MontantTot = NEW.FraisPeage + NEW.FraisRepas + NEW.FraisHeberge + NEW.FraisKilometre;
-
- select sum(montantTot) into v_montantnote from lignefrais where id_note = new.id_note ;
-
-set v_montantnote = v_montantnote + new.montantTot ;
-
-if v_nbligne = 0 then
- UPDATE notefrais SET MontantTot = New.montantTot
-WHERE id_note = NEW.id_note;
-ELSE 
-UPDATE notefrais SET MontantTot = v_montantnote  
-WHERE id_note = NEW.id_note;
-end if;
-
-END
-$$
-DELIMITER ;
 
 
 -- --------------------------------------------------------
@@ -386,6 +313,81 @@ ALTER TABLE `notefrais`
 ALTER TABLE `utilisateur`
   ADD CONSTRAINT `utilisateur_Ligues_FK` FOREIGN KEY (`idligue`) REFERENCES `ligues` (`idligue`);
 COMMIT;
+
+--
+-- Déclencheurs `lignefrais`
+--
+DELIMITER $$
+CREATE TRIGGER `before_delete_lignefrais` BEFORE DELETE ON `lignefrais` FOR EACH ROW BEGIN
+  UPDATE notefrais
+  SET montantTot = (
+    SELECT SUM(FraisPeage + FraisRepas + FraisHeberge + FraisKilometre) - old.montantTot
+    FROM lignefrais
+    WHERE lignefrais.id_note = notefrais.id_note
+  )
+  WHERE notefrais.id_note = OLD.id_note;
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `before_update_lignefrais` BEFORE UPDATE ON `lignefrais` FOR EACH ROW BEGIN
+declare v_montant int;
+declare v_fraiskilo int ; 
+select montant into v_montant from periodef where is_actif = 1;
+
+
+SET v_fraiskilo = NEW.kilometrage * v_montant;
+
+SET NEW.FraisKilometre = v_fraiskilo;
+
+
+  SET NEW.MontantTot = NEW.FraisPeage + NEW.FraisRepas + NEW.FraisHeberge + NEW.FraisKilometre;
+
+
+
+ UPDATE notefrais SET MontantTot = (
+    SELECT SUM(montantTot) - new.MontantTot
+    FROM lignefrais
+    WHERE id_note = NEW.id_note
+) WHERE id_note = NEW.id_note;
+
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `calcul_montant_total` BEFORE INSERT ON `lignefrais` FOR EACH ROW BEGIN
+
+declare v_montantnote int ;
+declare v_montant int;
+declare v_fraiskilo int ; 
+declare v_nbligne int ;
+
+select montant into v_montant from periodef where is_actif = 1;
+
+select count(*) into v_nbligne from lignefrais where id_note = new.id_note;
+
+SET v_fraiskilo = NEW.kilometrage * v_montant;
+
+SET NEW.FraisKilometre = v_fraiskilo;
+
+ SET NEW.MontantTot = NEW.FraisPeage + NEW.FraisRepas + NEW.FraisHeberge + NEW.FraisKilometre;
+
+ select sum(montantTot) into v_montantnote from lignefrais where id_note = new.id_note ;
+
+set v_montantnote = v_montantnote + new.montantTot ;
+
+if v_nbligne = 0 then
+ UPDATE notefrais SET MontantTot = New.montantTot
+WHERE id_note = NEW.id_note;
+ELSE 
+UPDATE notefrais SET MontantTot = v_montantnote  
+WHERE id_note = NEW.id_note;
+end if;
+
+END
+$$
+DELIMITER ;
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -116,7 +116,7 @@ foreach($periodefs as $periodef){
 <form>
 <select style="float: left;" name="periode" id="periode" onchange="this.form.submit()">
 <?php
-
+if( isset($_GET['periode'])){
   foreach (range('2019', '2023') as $char) {
     if ($char == $periode) {
       $selected = "selected";
@@ -125,6 +125,7 @@ foreach($periodefs as $periodef){
     }
     echo '<option value="' . $char . '" ' . $selected . ' >' . $char . '</option>' . PHP_EOL;
   }
+}
 ?>
 </select>
 </form><br><br>
