@@ -66,6 +66,7 @@ CREATE TABLE `lignefrais` (
   `datedeplacement` date NOT NULL,
   `libDeplacement` varchar(50) NOT NULL,
   `kilometrage` int(11) NOT NULL,
+  `fraisKilometre`  float NOT NULL,
   `fraisPeage` float NOT NULL,
   `fraisRepas` float NOT NULL,
   `fraisHeberge` float NOT NULL,
@@ -121,19 +122,6 @@ CREATE TABLE `notefrais` (
   `idperiode` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Déclencheurs `notefrais`
---
-DELIMITER $$
-CREATE TRIGGER `before_update_notefrais` BEFORE UPDATE ON `notefrais` FOR EACH ROW BEGIN
-if new.validite = 1 then 
-SET NEW.dateNote = CURDATE();
-end if;
- END
-$$
-DELIMITER ;
-
--- --------------------------------------------------------
 
 --
 -- Structure de la table `periodef`
@@ -315,6 +303,19 @@ ALTER TABLE `utilisateur`
 COMMIT;
 
 --
+-- Déclencheurs `notefrais`
+--
+DELIMITER $$
+CREATE TRIGGER `before_update_notefrais` BEFORE UPDATE ON `notefrais` FOR EACH ROW BEGIN
+if new.validite = 1 then 
+SET NEW.dateNote = CURDATE();
+end if;
+ END
+$$
+DELIMITER ;
+
+
+--
 -- Déclencheurs `lignefrais`
 --
 DELIMITER $$
@@ -329,6 +330,7 @@ CREATE TRIGGER `before_delete_lignefrais` BEFORE DELETE ON `lignefrais` FOR EACH
 END
 $$
 DELIMITER ;
+
 DELIMITER $$
 CREATE TRIGGER `before_update_lignefrais` BEFORE UPDATE ON `lignefrais` FOR EACH ROW BEGIN
 declare v_montant int;
@@ -354,6 +356,7 @@ SET NEW.FraisKilometre = v_fraiskilo;
 END
 $$
 DELIMITER ;
+
 DELIMITER $$
 CREATE TRIGGER `calcul_montant_total` BEFORE INSERT ON `lignefrais` FOR EACH ROW BEGIN
 
