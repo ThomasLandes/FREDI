@@ -50,6 +50,6 @@ Vous pouvez maintenant accéder à index.php soit l'accueil de FREDI.
 
 ### 4. Log.txt
 
-Une fois connecté chaque fois que vous allez sur une page une trace est enregistrée dans le fichier htaccess/log.txt
+Une fois connecté chaque fois que vous allez sur une page une trace est enregistrée dans le fichier ``htaccess/log.txt``.
 
 
