@@ -394,9 +394,9 @@ DELIMITER ;
 --
  
 INSERT INTO `utilisateur` (`idutil`, `pseudoutil`, `mdputil`, `nomutil`, `prenomutil`, `mailutil`, `typeutil`, `idligue`) VALUES 
-(NULL, 'Adherent', '$2y$10$BTuvvGN7ERM/2VXIgaBV4Ot24KOCTBx/uuNKHCnfiNj4sHXPNOEZG', 'Adherent', 'Adherent', 'Adherent', '1', '99'),
-(NULL, 'Controleur', '$2y$10$TDcFQLbw8wxiX49foFrQJO7dOnOe/kFeUQT/oK3dZM0cQMDdKRjzm', 'Controleur', 'Controleur', 'Controleur', '3', '99'),
-(NULL, 'Administrateur', '$2y$10$qdgvYltQJYxBZR22A7e2EuAYtWFGgQ6GFd4j.5QhSKXswtvxoSMNe', 'Administrateur', 'Administrateur', 'Administrateur', '2', '99');
+(NULL, 'Adherent', '$2y$10$.cFfBHW5/kjW1zCs8dUPmOw19RsvSmktPx8bXwyPKozseBGjXE332', 'Adherent', 'Adherent', 'adherent@m2l.com', '1', '99'),
+(NULL, 'Controleur', '$2y$10$rXEoptnSHUqcNLFPStwNuOSy9xBlbokw1kIAKS0Fb1e5k86CwbIMG', 'Controleur', 'Controleur', 'controleur@m2l.com', '3', '99'),
+(NULL, 'Administrateur', '$2y$10$rXEoptnSHUqcNLFPStwNuOSy9xBlbokw1kIAKS0Fb1e5k86CwbIMG', 'Administrateur', 'Administrateur', 'administrateur@m2l.com', '2', '99');
 
  
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
