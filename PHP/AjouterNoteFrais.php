@@ -65,7 +65,7 @@ if ($submit) {
 </head>
 <body>
 
-<h1>Ajouter une note</h1>
+<h1>Ajouter une Ligne de Frais</h1>
 
 <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
   <p>Date Deplacement<br /><input type="date" name="date" ></p>

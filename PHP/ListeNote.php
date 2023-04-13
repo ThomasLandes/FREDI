@@ -11,6 +11,15 @@ $periode = isset($_GET['periode']) ? $_GET['periode']:'';
 $actif = 0;
 
 
+
+
+
+
+
+
+
+
+
 if($util == CONTROLER){
 
 
@@ -25,6 +34,8 @@ try {
   die("<p>Erreur lors de la requête SQL : " . $e->getMessage() . "</p>");
 }
 } 
+
+
 
  if($util == DEFAULT_USER){
       
@@ -184,7 +195,7 @@ echo"</tr>";
   //  echo "<br><br>";
     }
 
-    echo "<br><p><a href='AjouterNoteFrais.php'>Ajouter</a> une ligne de frais</p><br>";
+    echo '<p>Ajouter une <a href="addFrais.php">note de frais</a></p>';
     echo '<p>Retour à l\'<a href="index.php">Acceuil</a></p>';
     
 
