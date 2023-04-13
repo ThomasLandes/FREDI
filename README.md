@@ -28,9 +28,9 @@ Prenez ensuite le fichier ``FREDI/sql/db/fredi.sql`` et importez le dans phpMyAd
 
 Il existe 3 types d'utilisateur avec chacun un pseudo, un mail et un mot de passe :
 
-- Adherent
-- Controleur 
-- Administrateur 
+- Adherent, adherent@m2l.com, Adherent31!
+- Controleur, controleur@m2l.com, Controleur31!
+- Administrateur, administrateur@m2l.com, Administrateur31!
 
 Lors de l'inscription l'utilisateur devient auomatiquement un adherent.
 Pour changer le type d'utilisateur il faut le faire manuellement via la table utilisateur, au niveau du champ typeutil dans la bdd : 
