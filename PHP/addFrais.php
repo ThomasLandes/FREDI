@@ -11,6 +11,7 @@ if ($submit){
     
     $date = isset($_POST['date']) ? $_POST['date'] : '2023-03-02';
     echo $date ;
+  
     $kilometrage = isset($_POST['kilometrage']) ? $_POST['kilometrage'] : '';
     $libdeplacement = isset($_POST['deplacement']) ? $_POST['deplacement'] : '';
     $FraisPeage = isset($_POST['FraisPeage']) ? $_POST['FraisPeage'] : '';
@@ -52,13 +53,27 @@ try {
 try {
     $sql = "INSERT INTO `lignefrais` ( `datedeplacement`, `libDeplacement`, `kilometrage`, `fraisPeage`, `fraisRepas`, `fraisHeberge`, `id_note`, `id_motif`) 
     VALUES ( :datedeplacement, :libdeplacement, :kilometrage, :FraisPeage , :FraisRepas, :FraisHeberge, :id_note, :id_motif);";
-    $result = $dbh -> prepare($sql);
-    $result->execute(array(":datedeplacement" => $date,  ":libdeplacement" =>   $libdeplacement, ":kilometrage" =>  $kilometrage, ":FraisPeage" =>  $FraisPeage, "FraisRepas" => $FraisRepas, ":fraisHeberge" => $FraisHeberge,":id_note" => $row['id_note'] ,":id_motif" =>  $id_motif, ));
-    header("Location: ListeNoteFrais.php");
-} catch (PDOException $ex) {
-    die("<p>Erreur lors de la requête SQL ligne 45: " . $ex->getMessage() . "</p>");
+    
+    $params = array(
+        ":datedeplacement" => $date,
+        ":libdeplacement" =>$libdeplacement,
+        ":kilometrage" => $kilometrage,
+        ":FraisPeage" => $FraisPeage,
+        ":FraisRepas" => $FraisRepas,
+        ":FraisHeberge" => $FraisHeberge,
+        ":id_note" => $row['id_note'],
+        ":id_motif" => $id_motif
+    );
+    
+    $sth = $dbh->prepare($sql);
+    $sth->execute($params);
+    $nb = $sth->rowcount();
+    
+    header("Location: ListeNoteFrais.php?id_note=" . urlencode($row['id_note']));
+} catch (PDOException $e) {
+    die("<p>Erreur lors de la requête SQL : " . $e->getMessage() . "</p>");
 }
-}
+} 
 
 ?>
 <!DOCTYPE html>
