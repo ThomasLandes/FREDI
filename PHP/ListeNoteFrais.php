@@ -16,6 +16,17 @@ $id_note = isset($_GET['id_note']) ? $_GET['id_note'] : null;
 // Connexion à la base
 $dbh=db_connect();
 
+
+// try {
+
+//   $sql= "SELECT idperiode, montant FROM periodef WHERE is_actif = 1";
+//   $result = $dbh -> prepare($sql);
+//   $result->execute();
+//   $row = $result->fetch(PDO::FETCH_ASSOC);
+// } catch (PDOException $ex) {
+//   die("Erreur lors de la requête SQL ligne 18 : " . $ex->getMessage());
+// }
+
   $sql = ' SELECT * from lignefrais where id_note = :id_note ;';
 
   $params = array(
@@ -70,6 +81,7 @@ $dbh=db_connect();
       echo '<td><a href="SupprimerNoteFrais.php?idligne='.$row['idligne'].'&idnote=' . $id_note . '">Supprimer </a></td>';
     }
     echo "</table>";
+
     echo '<p><a href="AjouterNoteFrais.php?id_note=' . $id_note. '">Ajouter </a>une liste de notes</p>';
     echo '<p><a href="index.php">Retour </a>Acceuil</p>';
 

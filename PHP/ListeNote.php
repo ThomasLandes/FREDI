@@ -9,6 +9,7 @@ $submit2 = isset($_POST['submit']);
 $idnote  = isset($_POST['id_note']) ? $_POST['id_note'] : '';
 $periode = isset($_GET['periode']) ? $_GET['periode']:'';
 $actif = 0;
+$lien = 0;
 
 
 
@@ -16,6 +17,27 @@ $actif = 0;
 
 
 
+
+
+  if ($util == DEFAULT_USER) {
+    $sql = 'SELECT COUNT(*) from notefrais where idutil = :idutil and idperiode = (SELECT idperiode from periodef where is_actif = 1)';
+    $params = array(
+
+      ":idutil" =>  $_SESSION['id'],
+    );
+  
+    try {
+      $sth = $dbh->prepare($sql);
+      $sth->execute($params); 
+      $periodesql = $sth->fetchAll(PDO::FETCH_ASSOC);
+      
+      if ($periodesql[0]['COUNT(*)'] == 0) {
+        $lien = 1;
+      }
+    } catch (PDOException $e) {
+      die("<p>Erreur lors de la requête SQL : " . $e->getMessage() . "</p>");
+    }
+  }
 
 
 
@@ -52,7 +74,6 @@ try {
   
 } 
 
-echo $submit2;
 if($submit2){
   $sql ='UPDATE notefrais SET validite = 1 WHERE id_note = :id_note';
  
@@ -194,10 +215,11 @@ echo"</tr>";
     //echo "<p style='padding:2px;background-color:gray;float:left;margin-left:500px'><input type='submit' name='submit2' value='Valider notes'></form></p>";
   //  echo "<br><br>";
     }
-
+if($lien == 1 ){
     echo '<p>Ajouter une <a href="addFrais.php">note de frais</a></p>';
+}
     echo '<p>Retour à l\'<a href="index.php">Acceuil</a></p>';
-    
+   
 
 
 ?>

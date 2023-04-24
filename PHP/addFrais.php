@@ -4,8 +4,7 @@
 $dbh = db_connect(); 
 $submit = isset($_POST['submit']);
 
-
-
+// insertion d'une ligne de frais dans une nouvelle note 
 
 if ($submit){
     
