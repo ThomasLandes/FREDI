@@ -18,7 +18,9 @@ $util = verrif_util($conect);
 </head>
 
 <body>
- <?php  include 'menu.php'; ?>
+ <?php  include 'menu.php'; 
+ ?>
+ 
 </body>
 
 </html>

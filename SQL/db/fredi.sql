@@ -132,6 +132,13 @@ CREATE TABLE `periodef` (
   `is_actif` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Déchargement des données de la table `periodef`
+--
+
+INSERT INTO `periodef` (`idperiode`, `libelleperiode`, `montant`, `is_actif`) VALUES ('1', '1', '0.25', '1');
+INSERT INTO `periodef` (`idperiode`, `libelleperiode`, `montant`, `is_actif`) VALUES ('2', '2', '0.25', '0');
+
 -- --------------------------------------------------------
 
 --
@@ -174,8 +181,8 @@ ALTER TABLE `club`
 --
 ALTER TABLE `lignefrais`
   ADD PRIMARY KEY (`idligne`),
-  ADD KEY `ligneFrais_NoteFrais_FK` (`id_note`),
-  ADD KEY `ligneFrais_Motif0_FK` (`id_motif`);
+  ADD KEY `lignefrais_Notefrais_FK` (`id_note`),
+  ADD KEY `lignefrais_Motif0_FK` (`id_motif`);
 
 --
 -- Index pour la table `ligues`
@@ -194,8 +201,8 @@ ALTER TABLE `motif`
 --
 ALTER TABLE `notefrais`
   ADD PRIMARY KEY (`id_note`),
-  ADD KEY `NoteFrais_utilisateur_FK` (`idutil`),
-  ADD KEY `NoteFrais_periodef` (`idperiode`);
+  ADD KEY `Notefrais_utilisateur_FK` (`idutil`),
+  ADD KEY `Notefrais_periodef` (`idperiode`);
 --
 -- Index pour la table `periodef`
 --
@@ -282,15 +289,15 @@ ALTER TABLE `club`
 -- Contraintes pour la table `lignefrais`
 --
 ALTER TABLE `lignefrais`
-  ADD CONSTRAINT `ligneFrais_Motif0_FK` FOREIGN KEY (`id_motif`) REFERENCES `motif` (`id_motif`),
-  ADD CONSTRAINT `ligneFrais_NoteFrais_FK` FOREIGN KEY (`id_note`) REFERENCES `notefrais` (`id_note`);
+  ADD CONSTRAINT `lignefrais_Motif0_FK` FOREIGN KEY (`id_motif`) REFERENCES `motif` (`id_motif`),
+  ADD CONSTRAINT `lignefrais_Notefrais_FK` FOREIGN KEY (`id_note`) REFERENCES `notefrais` (`id_note`);
 
 --
 -- Contraintes pour la table `notefrais`
 --
 ALTER TABLE `notefrais`
-  ADD CONSTRAINT `NoteFrais_utilisateur_FK` FOREIGN KEY (`idutil`) REFERENCES `utilisateur` (`idutil`),
-  ADD CONSTRAINT `NoteFrais_periodef_FK` FOREIGN KEY (`idperiode`) REFERENCES `periodef` (`idperiode`);
+  ADD CONSTRAINT `Notefrais_utilisateur_FK` FOREIGN KEY (`idutil`) REFERENCES `utilisateur` (`idutil`),
+  ADD CONSTRAINT `Notefrais_periodef_FK` FOREIGN KEY (`idperiode`) REFERENCES `periodef` (`idperiode`);
 
 
 --
@@ -320,7 +327,7 @@ DELIMITER $$
 CREATE TRIGGER `before_delete_lignefrais` BEFORE DELETE ON `lignefrais` FOR EACH ROW BEGIN
   UPDATE notefrais
   SET montantTot = (
-    SELECT SUM(FraisPeage + FraisRepas + FraisHeberge + FraisKilometre) - old.montantTot
+    SELECT SUM(fraisPeage + fraisRepas + fraisHeberge + fraisKilometre) - old.montantTot
     FROM lignefrais
     WHERE lignefrais.id_note = notefrais.id_note
   )
@@ -338,10 +345,10 @@ select montant into v_montant from periodef where is_actif = 1;
 
 SET v_fraiskilo = NEW.kilometrage * v_montant;
 
-SET NEW.FraisKilometre = v_fraiskilo;
+SET NEW.fraisKilometre = v_fraiskilo;
 
 
-  SET NEW.MontantTot = NEW.FraisPeage + NEW.FraisRepas + NEW.FraisHeberge + NEW.FraisKilometre;
+  SET NEW.MontantTot = NEW.fraisPeage + NEW.fraisRepas + NEW.fraisHeberge + NEW.fraisKilometre;
 
 
 
@@ -359,8 +366,8 @@ DELIMITER $$
 CREATE TRIGGER `calcul_montant_total` BEFORE INSERT ON `lignefrais` FOR EACH ROW BEGIN
 
 declare v_montantnote int ;
-declare v_montant int;
-declare v_fraiskilo int ; 
+declare v_montant float;
+declare v_fraiskilo float ; 
 declare v_nbligne int ;
 
 select montant into v_montant from periodef where is_actif = 1;
@@ -369,9 +376,9 @@ select count(*) into v_nbligne from lignefrais where id_note = new.id_note;
 
 SET v_fraiskilo = NEW.kilometrage * v_montant;
 
-SET NEW.FraisKilometre = v_fraiskilo;
+SET NEW.fraisKilometre = v_fraiskilo;
 
- SET NEW.MontantTot = NEW.FraisPeage + NEW.FraisRepas + NEW.FraisHeberge + NEW.FraisKilometre;
+ SET NEW.MontantTot = NEW.fraisPeage + NEW.fraisRepas + NEW.fraisHeberge + NEW.fraisKilometre;
 
  select sum(montantTot) into v_montantnote from lignefrais where id_note = new.id_note ;
 

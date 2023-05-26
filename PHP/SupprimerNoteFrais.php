@@ -35,7 +35,7 @@ if ($submit) {
     } catch (PDOException $e) {
         die("<p>Erreur lors de la requête SQL : " . $e->getMessage() . "</p>");
     }
-    header("Location: ListeNoteFrais.php?id_note=$idnote");
+    header("Location: ListeNotefrais.php?id_note=$idnote");
      
 } else {
    
@@ -51,10 +51,10 @@ if ($submit) {
         $date = $row['datedeplacement'];
         $lib = $row['libDeplacement'];
         $kilo = $row['kilometrage'];
-        $FraisP = $row['fraisPeage'];
-        $FraisR= $row['fraisRepas'];
-        $FraisH = $row['fraisHeberge'];
-        $FraisK= $row['FraisKilometre'];
+        $fraisP = $row['fraisPeage'];
+        $fraisR= $row['fraisRepas'];
+        $fraisH = $row['fraisHeberge'];
+        $fraisK= $row['fraisKilometre'];
     } catch (PDOException $e) {
         die("<p>Erreur lors de la requête SQL : " . $e->getMessage() . "</p>");
     }
@@ -81,14 +81,14 @@ if ($submit) {
   <p>Date Deplacement<br /><input type="date" name="date" value = "<?php echo $date?>"  ></p>
   <p>Lib Deplacement<br /><input type="text" name="libdeplacement" value = "<?php echo $lib ?>"></p>
   <p>Kilometrage<br /><input type="text" name="kilometrage" value = "<?php echo $kilo ?>" ></p>
-  <p>FraisPeage<br /><input type="text" name="FraisPeage" value = "<?php echo $FraisP  ?>" ></p>
-  <p>FraisRepas<br /><input type="text" name="FraisRepas"  value = "<?php echo $FraisR  ?>" ></p>
-  <p>FraisHeberge<br /><input type="text" name="FraisHeberge"  value = "<?php echo $FraisH ?>" ></p>
-  <p>FraisKilometre<br /><input type="text" name="FraisKilometre"  value = "<?php echo $FraisK  ?>"></p>
+  <p>fraisPeage<br /><input type="text" name="fraisPeage" value = "<?php echo $fraisP  ?>" ></p>
+  <p>fraisRepas<br /><input type="text" name="fraisRepas"  value = "<?php echo $fraisR  ?>" ></p>
+  <p>fraisHeberge<br /><input type="text" name="fraisHeberge"  value = "<?php echo $fraisH ?>" ></p>
+  <p>fraisKilometre<br /><input type="text" name="fraisKilometre"  value = "<?php echo $fraisK  ?>"></p>
   <p><input type="submit" name="submit" value="OK"></p>
 </form>
 <?php
-echo '<p><a href="ListeNoteFrais.php?id_note=' . $idnote . '">Retour </a>ListeNote</p>';
+echo '<p><a href="ListeNotefrais.php?id_note=' . $idnote . '">Retour </a>ListeNote</p>';
 ?>
 </body>
 </html>

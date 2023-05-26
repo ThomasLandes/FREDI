@@ -128,7 +128,7 @@ try {
 
     echo '<table>';
     if( $util == DEFAULT_USER){
-    echo '<tr><th>Ordre</th><th>Montant</th><th>Date</th><th>Voir ligne Frais</th>';
+    echo '<tr><th>Ordre</th><th>Montant</th><th>Date</th><th>Voir ligne frais</th>';
     }
     if ($util == CONTROLER ) {
       echo "<div style='padding: 15px;''>";
@@ -178,7 +178,7 @@ echo"</tr>";
       echo '<td>'.$row['dateNote'].'</td>';
 
       if ($row['is_actif'] == 1 && $util == DEFAULT_USER ) {
-        echo '<td>[<a href="ListeNoteFrais.php?id_note=' . $row['id_note'] . '">Voir liste note de frais</a>]</td>';
+        echo '<td>[<a href="ListeNotefrais.php?id_note=' . $row['id_note'] . '">Voir liste note de frais</a>]</td>';
       }
 
       if ($row['is_actif'] == 0 && $util == DEFAULT_USER ) {
@@ -216,7 +216,7 @@ echo"</tr>";
   //  echo "<br><br>";
     }
 if($lien == 1 ){
-    echo '<p>Ajouter une <a href="addFrais.php">note de frais</a></p>';
+    echo '<p>Ajouter une <a href="addfrais.php">note de frais</a></p>';
 }
     echo '<p>Retour à l\'<a href="index.php">Acceuil</a></p>';
    

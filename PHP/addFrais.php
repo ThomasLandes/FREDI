@@ -13,9 +13,9 @@ if ($submit){
   
     $kilometrage = isset($_POST['kilometrage']) ? $_POST['kilometrage'] : '';
     $libdeplacement = isset($_POST['deplacement']) ? $_POST['deplacement'] : '';
-    $FraisPeage = isset($_POST['FraisPeage']) ? $_POST['FraisPeage'] : '';
-    $FraisRepas = isset($_POST['FraisRepas']) ? $_POST['FraisRepas'] : '';
-    $FraisHeberge = isset($_POST['FraisHeberge']) ? $_POST['FraisHeberge'] : '';
+    $fraisPeage = isset($_POST['fraisPeage']) ? $_POST['fraisPeage'] : '';
+    $fraisRepas = isset($_POST['fraisRepas']) ? $_POST['fraisRepas'] : '';
+    $fraisHeberge = isset($_POST['fraisHeberge']) ? $_POST['fraisHeberge'] : '';
     $id_motif = isset($_POST['Motif']) ? $_POST['Motif'] : '';
   
 
@@ -32,7 +32,7 @@ if ($submit){
     $id_periode = $row['idperiode'];
 
     $mt_km =     $kilometrage* $prixKm;
-    $mt_total =  $kilometrage + $FraisPeage + $FraisRepas +   $FraisHeberge;
+    $mt_total =  $kilometrage + $fraisPeage + $fraisRepas +   $fraisHeberge;
 
     try {
     $sql= "INSERT INTO notefrais( montantTot, dateNote, idperiode, idutil) VALUES( :mt_total, :date_remis, :id_periode, :id_utilisateur)";
@@ -51,15 +51,15 @@ try {
 }
 try {
     $sql = "INSERT INTO `lignefrais` ( `datedeplacement`, `libDeplacement`, `kilometrage`, `fraisPeage`, `fraisRepas`, `fraisHeberge`, `id_note`, `id_motif`) 
-    VALUES ( :datedeplacement, :libdeplacement, :kilometrage, :FraisPeage , :FraisRepas, :FraisHeberge, :id_note, :id_motif);";
+    VALUES ( :datedeplacement, :libdeplacement, :kilometrage, :fraisPeage , :fraisRepas, :fraisHeberge, :id_note, :id_motif);";
     
     $params = array(
         ":datedeplacement" => $date,
         ":libdeplacement" =>$libdeplacement,
         ":kilometrage" => $kilometrage,
-        ":FraisPeage" => $FraisPeage,
-        ":FraisRepas" => $FraisRepas,
-        ":FraisHeberge" => $FraisHeberge,
+        ":fraisPeage" => $fraisPeage,
+        ":fraisRepas" => $fraisRepas,
+        ":fraisHeberge" => $fraisHeberge,
         ":id_note" => $row['id_note'],
         ":id_motif" => $id_motif
     );
@@ -68,7 +68,7 @@ try {
     $sth->execute($params);
     $nb = $sth->rowcount();
     
-    header("Location: ListeNoteFrais.php?id_note=" . urlencode($row['id_note']));
+    header("Location: ListeNotefrais.php?id_note=" . urlencode($row['id_note']));
 } catch (PDOException $e) {
     die("<p>Erreur lors de la requête SQL : " . $e->getMessage() . "</p>");
 }
@@ -85,18 +85,26 @@ try {
 </head>
 <body>
 
-<h1>Ajouter une Ligne de Frais</h1>
+<h1>Ajouter une Ligne de frais</h1>
 
 <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
   <p>Date Deplacement<br /><input type="date" name="date" ></p>
   <p>Lib Deplacement<br /><input type="text" name="deplacement" ></p>
   <p>Kilometrage<br /><input type="text" name="kilometrage" ></p>
-  <p>FraisPeage<br /><input type="text" name="FraisPeage" ></p>
-  <p>FraisRepas<br /><input type="text" name="FraisRepas" ></p>
-  <p>FraisHeberge<br /><input type="text" name="FraisHeberge" ></p>
+  <p>fraisPeage<br /><input type="text" name="fraisPeage" ></p>
+  <p>fraisRepas<br /><input type="text" name="fraisRepas" ></p>
+  <p>fraisHeberge<br /><input type="text" name="fraisHeberge" ></p>
   <p>Motif : <select name="Motif">
-<option value="1" selected>Travail</option>
-<option value="2" >Voiture</option>
+<option value="1" selected>Réunion</option>
+<option value="2" >Compétition régionale</option>
+<option value="3" > Compétition nationale</option>
+<option value="4" >Compétition internationnale</option>
+<option value="5" >Stage</option>
+<option value="6" >Visite médicale</option>
+<option value="7" >Oxygénation</option>
+<option value="8" >Convocation</option>
+<option value="9" >Formation</option>
+
 </select>
 </p>
   <br /><input type="hidden" name="id_note" value= "<?php echo  $id_note?>"></p>

@@ -62,7 +62,7 @@ $dbh=db_connect();
 <?php
 
     echo '<table>';
-    echo '<tr><th>DateDeplacement</th><th>libDeplacement</th><th>Kilometrage</th><th>FraisPeage</th><th>FraisRepas</th><th>FraisHeberge</th><th>FraisKilometre</th><th>MontantTot</th><th>Actions</th></tr>';
+    echo '<tr><th>DateDeplacement</th><th>libDeplacement</th><th>Kilometrage</th><th>fraisPeage</th><th>fraisRepas</th><th>fraisHeberge</th><th>fraisKilometre</th><th>MontantTot</th><th>Actions</th></tr>';
     
    
     foreach ($rows as $row)
@@ -75,14 +75,14 @@ $dbh=db_connect();
       echo '<td>'.$row['fraisPeage'].'</td>';
       echo '<td>'.$row['fraisRepas'].'</td>';
       echo '<td>'.$row['fraisHeberge'].'</td>';
-      echo '<td>'.$row['FraisKilometre'].'</td>';
+      echo '<td>'.$row['fraisKilometre'].'</td>';
       echo '<td>'.$row['montantTot'].'</td>';
-      echo '<td><a href="ModifierNoteFrais.php?idligne='.$row['idligne'].'&idnote=' . $id_note . '">Modifier </a></td>';
-      echo '<td><a href="SupprimerNoteFrais.php?idligne='.$row['idligne'].'&idnote=' . $id_note . '">Supprimer </a></td>';
+      echo '<td><a href="ModifierNotefrais.php?idligne='.$row['idligne'].'&idnote=' . $id_note . '">Modifier </a></td>';
+      echo '<td><a href="SupprimerNotefrais.php?idligne='.$row['idligne'].'&idnote=' . $id_note . '">Supprimer </a></td>';
     }
     echo "</table>";
 
-    echo '<p><a href="AjouterNoteFrais.php?id_note=' . $id_note. '">Ajouter </a>une liste de notes</p>';
+    echo '<p><a href="AjouterNotefrais.php?id_note=' . $id_note. '">Ajouter </a>une liste de notes</p>';
     echo '<p><a href="index.php">Retour </a>Acceuil</p>';
 
 

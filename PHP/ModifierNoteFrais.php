@@ -24,23 +24,23 @@ if ($submit) {
  $datedeplacement  = isset($_POST['date']) ? $_POST['date'] : null;
 $kilometrage = isset($_POST['kilometrage']) ? $_POST['kilometrage'] : null;
 $libdeplacement = isset($_POST['libdeplacement']) ? $_POST['libdeplacement'] : null;
-$FraisPeage = isset($_POST['FraisPeage']) ? $_POST['FraisPeage'] : null;
-$FraisRepas = isset($_POST['FraisRepas']) ? $_POST['FraisRepas'] : null;
-$FraisHeberge = isset($_POST['FraisHeberge']) ? $_POST['FraisHeberge'] : null;
+$fraisPeage = isset($_POST['fraisPeage']) ? $_POST['fraisPeage'] : null;
+$fraisRepas = isset($_POST['fraisRepas']) ? $_POST['fraisRepas'] : null;
+$fraisHeberge = isset($_POST['fraisHeberge']) ? $_POST['fraisHeberge'] : null;
 
 
 
 echo $idnote;
-    $sql = "UPDATE lignefrais SET datedeplacement = :datedeplacement, libDeplacement = :libdeplacement  , kilometrage = :kilometrage , fraisPeage = :FraisPeage , fraisRepas = :FraisRepas , fraisHeberge = :FraisHeberge  where idligne = :idligne";
+    $sql = "UPDATE lignefrais SET datedeplacement = :datedeplacement, libDeplacement = :libdeplacement  , kilometrage = :kilometrage , fraisPeage = :fraisPeage , fraisRepas = :fraisRepas , fraisHeberge = :fraisHeberge  where idligne = :idligne";
 
     $params = array(
         ":idligne" => $idligne,
         ":datedeplacement" => $datedeplacement,
         ":libdeplacement" =>$libdeplacement,
         ":kilometrage" => $kilometrage,
-        ":FraisPeage" => $FraisPeage,
-        ":FraisRepas" => $FraisRepas,
-        ":FraisHeberge" => $FraisHeberge,
+        ":fraisPeage" => $fraisPeage,
+        ":fraisRepas" => $fraisRepas,
+        ":fraisHeberge" => $fraisHeberge,
    
      
 
@@ -53,7 +53,7 @@ echo $idnote;
     } catch (PDOException $e) {
         die("<p>Erreur lors de la requête SQL : " . $e->getMessage() . "</p>");
     }
-    header("Location: ListeNoteFrais.php?id_note=$idnote");
+    header("Location: ListeNotefrais.php?id_note=$idnote");
      
 } else {
    
@@ -69,9 +69,9 @@ echo $idnote;
         $date = $row['datedeplacement'];
         $lib = $row['libDeplacement'];
         $kilo = $row['kilometrage'];
-        $FraisP = $row['fraisPeage'];
-        $FraisR= $row['fraisRepas'];
-        $FraisH = $row['fraisHeberge'];
+        $fraisP = $row['fraisPeage'];
+        $fraisR= $row['fraisRepas'];
+        $fraisH = $row['fraisHeberge'];
        
     } catch (PDOException $e) {
         die("<p>Erreur lors de la requête SQL : " . $e->getMessage() . "</p>");
@@ -99,14 +99,14 @@ echo $idnote;
   <p>Date Deplacement<br /><input type="date" name="date" value = "<?php echo $date?>"  ></p>
   <p>Lib Deplacement<br /><input type="text" name="libdeplacement" value = "<?php echo $lib ?>"></p>
   <p>Kilometrage<br /><input type="text" name="kilometrage" value = "<?php echo $kilo ?>" ></p>
-  <p>FraisPeage<br /><input type="text" name="FraisPeage" value = "<?php echo $FraisP  ?>" ></p>
-  <p>FraisRepas<br /><input type="text" name="FraisRepas"  value = "<?php echo $FraisR  ?>" ></p>
-  <p>FraisHeberge<br /><input type="text" name="FraisHeberge"  value = "<?php echo $FraisH ?>" ></p>
+  <p>fraisPeage<br /><input type="text" name="fraisPeage" value = "<?php echo $fraisP  ?>" ></p>
+  <p>fraisRepas<br /><input type="text" name="fraisRepas"  value = "<?php echo $fraisR  ?>" ></p>
+  <p>fraisHeberge<br /><input type="text" name="fraisHeberge"  value = "<?php echo $fraisH ?>" ></p>
 
   <p><input type="submit" name="submit" value="OK"></p>
 </form>
 <?php
-echo '<p><a href="ListeNoteFrais.php?id_note=' . $idnote . '">Retour </a>ListeNote</p>';
+echo '<p><a href="ListeNotefrais.php?id_note=' . $idnote . '">Retour </a>ListeNote</p>';
 ?>
 </body>
 </html>
