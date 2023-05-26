@@ -136,8 +136,8 @@ CREATE TABLE `periodef` (
 -- Déchargement des données de la table `periodef`
 --
 
-INSERT INTO `periodef` (`idperiode`, `libelleperiode`, `montant`, `is_actif`) VALUES ('1', '1', '0.25', '1');
-INSERT INTO `periodef` (`idperiode`, `libelleperiode`, `montant`, `is_actif`) VALUES ('2', '2', '0.25', '0');
+INSERT INTO `periodef` (`idperiode`, `libelleperiode`, `montant`, `is_actif`) VALUES ('1', '2023', '0.25', '1');
+INSERT INTO `periodef` (`idperiode`, `libelleperiode`, `montant`, `is_actif`) VALUES ('2', '2022', '0.25', '0');
 
 -- --------------------------------------------------------
 
