@@ -275,6 +275,8 @@ ALTER TABLE `utilisateur`
 --
 -- Contraintes pour la table `adherent`
 --
+ALTER TABLE `adherent` ADD `licence` VARCHAR(25) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL AFTER `ville`;
+
 ALTER TABLE `adherent`
   ADD CONSTRAINT `adherent_club_FK` FOREIGN KEY (`idclub`) REFERENCES `club` (`idclub`),
   ADD CONSTRAINT `adherent_utilisateur0_FK` FOREIGN KEY (`idutil`) REFERENCES `utilisateur` (`idutil`);

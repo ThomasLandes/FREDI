@@ -223,7 +223,9 @@ if($lien == 1 ){
   if( $util == CONTROLER ){
     echo'<p>Obtenir le pdf <a href=" cumul_des_frais_pdf.php">du cumul des frais</a></p>';
   }
-
+  if( $util == DEFAULT_USER){
+  echo'<p>Obtenir le pdf <a href="bordereau_pdf.php">bordereaux</a></p>';
+  }
 
 
 ?>
