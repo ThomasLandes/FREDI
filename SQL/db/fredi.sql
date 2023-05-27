@@ -32,11 +32,21 @@ USE `fredi`;
 CREATE TABLE `adherent` (
   `idadherent` int(11) NOT NULL,
   `adresse` varchar(50) NOT NULL,
+  `licence` varchar(50) NOT NULL,
   `code_postal` int(5) NOT NULL,
   `ville` varchar(50) NOT NULL,
   `idclub` int(11) NOT NULL,
   `idutil` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `adherent` (`idadherent`, `adresse`, `code_postal`, `ville`, `licence`, `idclub`, `idutil`) 
+VALUES ('1', '2 rue Jean Renoir', '31500', 'Toulouse', 'L230', '1', '1');
+
+INSERT INTO `adherent` (`idadherent`, `adresse`, `code_postal`, `ville`, `licence`, `idclub`, `idutil`) 
+VALUES ('2', '3 rue Pierre Henri', '81000', 'Castres', 'L300', '1', '3');
+
+INSERT INTO `adherent` (`idadherent`, `adresse`, `code_postal`, `ville`, `licence`, `idclub`, `idutil`) 
+VALUES ('3', 'Avenue du Beau Temps', '31500', 'Toulouse', 'L260', '11', '2');
 
 -- --------------------------------------------------------
 
@@ -114,7 +124,7 @@ CREATE TABLE `notefrais` (
   `id_note` int(11) NOT NULL,
   `validite` tinyint(1) NOT NULL,
   `montantTot` float NOT NULL,
-  `dateNote` date NOT NULL DEFAULT CURDATE(),
+  `dateNote` date NOT NULL,
   `numOrdre` int(11) NOT NULL,
   `idutil` int(11) NOT NULL,
   `idperiode` int(11) NOT NULL
@@ -275,8 +285,6 @@ ALTER TABLE `utilisateur`
 --
 -- Contraintes pour la table `adherent`
 --
-ALTER TABLE `adherent` ADD `licence` VARCHAR(25) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL AFTER `ville`;
-
 ALTER TABLE `adherent`
   ADD CONSTRAINT `adherent_club_FK` FOREIGN KEY (`idclub`) REFERENCES `club` (`idclub`),
   ADD CONSTRAINT `adherent_utilisateur0_FK` FOREIGN KEY (`idutil`) REFERENCES `utilisateur` (`idutil`);
