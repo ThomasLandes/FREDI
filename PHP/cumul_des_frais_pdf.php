@@ -9,7 +9,7 @@ $laDATA = db_connect();
 
 // Lecture des notes depuis la DB
 try {
-    $sql = "SELECT lignefrais.*, motif.*, notefrais.*, periodef.*, lignefrais.montantTot AS montantTotLigne 
+    $sql = "SELECT * ,lignefrais.montantTot AS montantTotLigne 
     FROM lignefrais, motif, notefrais, periodef 
     WHERE motif.id_motif = lignefrais.id_motif 
     AND notefrais.id_note = lignefrais.id_note 
