@@ -114,7 +114,7 @@ CREATE TABLE `notefrais` (
   `id_note` int(11) NOT NULL,
   `validite` tinyint(1) NOT NULL,
   `montantTot` float NOT NULL,
-  `dateNote` date NOT NULL,
+  `dateNote` date NOT NULL DEFAULT CURDATE(),
   `numOrdre` int(11) NOT NULL,
   `idutil` int(11) NOT NULL,
   `idperiode` int(11) NOT NULL
