@@ -82,7 +82,7 @@ $dbh=db_connect();
     }
     echo "</table>";
 
-    echo '<p><a href="AjouterNotefrais.php?id_note=' . $id_note. '">Ajouter </a>une liste de notes</p>';
+    echo '<p><a href="AjouterNotefrais.php?id_note=' . $id_note. '">Ajouter </a>une ligne de frais </p>';
     echo '<p><a href="index.php">Retour </a>Acceuil</p>';
 
 
