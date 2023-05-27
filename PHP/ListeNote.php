@@ -218,8 +218,12 @@ echo"</tr>";
 if($lien == 1 ){
     echo '<p>Ajouter une <a href="addfrais.php">note de frais</a></p>';
 }
-    echo '<p>Retour à l\'<a href="index.php">Acceuil</a></p>';
-   
+  echo '<p>Retour à l\'<a href="index.php">Acceuil</a></p>';
+  
+  if( $util == CONTROLER ){
+    echo'<p>Obtenir le pdf <a href=" cumul_des_frais_pdf.php">du cumul des frais</a></p>';
+  }
+
 
 
 ?>
