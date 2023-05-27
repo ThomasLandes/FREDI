@@ -45,7 +45,7 @@ $lien = 0;
 if($util == CONTROLER){
 
 
-    $sql = '  SELECT * from notefrais,periodef where notefrais.idperiode = periodef.idperiode and periodef.is_actif = 1';
+    $sql = 'SELECT * from notefrais,periodef,utilisateur where notefrais.idperiode = periodef.idperiode and periodef.is_actif = 1 and utilisateur.idutil = notefrais.idutil;';
 $params = array();
 $sql_periode = ' SELECT * from periodef';
 try {
@@ -166,13 +166,14 @@ foreach($periodefs as $periodef){
 <?php
   if ($util == CONTROLER ) {
 echo "<table>";
-    echo"<tr><th>Ordre</th><th>Montant</th><th>Date</th><th>Valide</th>";
+    echo"<tr><th>Nom Util<th>Ordre</th><th>Montant</th><th>Date</th><th>Valide</th>";
     }
 echo"</tr>";
     foreach ($rows as $row)
     {
        $id = "id_note".$row['id_note'];
       echo '<tr>';
+      if ($util == CONTROLER ) { echo '<td>'.$row['pseudoutil'].'</td>';}
       echo '<td>'.$row['numOrdre'].'</td>';
       echo "<td>".$row['montantTot']."</td>";
       echo '<td>'.$row['dateNote'].'</td>';
