@@ -12,6 +12,11 @@ $idligue = isset($_POST['idligue']) ? $_POST['idligue'] : '';
 $typeutil = isset($_POST['idtype']) ? $_POST['idtype'] : '';
 $mail = isset($_POST['mail']) ? $_POST['mail'] : '';
 $mdp = password_hash($mdpuncrypt, PASSWORD_BCRYPT);
+$adresse = isset($_POST['adresse']) ? $_POST['adresse'] : '';
+$ville = isset($_POST['ville']) ? $_POST['ville'] : '';
+$codepostal = isset($_POST['codepostal']) ? $_POST['codepostal'] : '';
+$club = isset($_POST['club']) ? $_POST['club'] : '';
+$licence = isset($_POST['licence']) ? $_POST['licence'] : '';
 
 $submit = isset($_POST['submit']);
 
@@ -50,6 +55,25 @@ if ($submit) {
             } catch (PDOException $e) {
                 die("<p>Erreur lors de la requête SQL : " . $e->getMessage() . "</p>");
             }
+
+                  // Insérer les données dans la table "adherent"
+        $sqlAdherent = "INSERT INTO `adherent` (`adresse`, `licence`, `code_postal`, `ville`, `idclub`, `idutil`) VALUES (:adresse , :licence, :codepostal, :ville, :club, :idutil)";
+        $paramsAdherent = array(
+            ":idutil" => $dbh->lastInsertId(), // Récupère l'ID généré pour l'utilisateur inséré précédemment
+            ":licence" => $licence ,
+            ":adresse" => $adresse  ,
+            ":codepostal" => $codepostal ,
+            ":ville" => $ville ,
+            ":club" => $club 
+           
+        );
+        try {
+            $sthAdherent = $dbh->prepare($sqlAdherent);
+            $sthAdherent->execute($paramsAdherent);
+            $nbAdherent = $sthAdherent->rowCount();
+        } catch (PDOException $e) {
+            die("<p>Erreur lors de la requête SQL : " . $e->getMessage() . "</p>");
+        }
             redirect('connexion.php');
         }else{
             $messages[]= "Mot de passe non comforme : vous devez avoir au moins 8 caractères, 1 Majuscules, 1 minuscule, 1 Chiffre et 1 caractère spécial. Veuillez recommencer => <a href='inscription.php'>recharger la page</a>";
@@ -89,6 +113,25 @@ if ($submit) {
                     <p><input type="username" name="pseudo" placeholder="Nom utilisateur" required></p>
                     <p><input type="text" name="nom" placeholder="Nom" require></p>
                     <p><input type="text" name="prenom" placeholder="Prenom" require></p>
+                    <p><input type="text" name="adresse" placeholder="adresse" require></p>
+                    <p><input type="text" name="ville" placeholder="ville" require></p>
+                    <p><input type="text" name="codepostal" placeholder="codepostal" require></p>
+                    <p><input type="text" name="licence" placeholder="licence" require></p>
+                    <p><select name="club" required>
+                <option value="1">Dojo Burgien</option>
+                <option value="2">Saint-Denis Dojo</option>
+                <option value="3">Judo Club Vallée Arbent</option>
+                <option value="4">Belli Judo</option>
+                <option value="5">Racing Club Montluel Judo</option>
+                <option value="6">Centre Arts Martiaux Pondinois</option>
+                <option value="7">Judo Club Ornex</option>
+                <option value="8">Dojo Gessien Valserine</option>
+                <option value="9">Dojo La Vallière</option>
+                <option value="10">Football club Merville</option>
+                <option value="11">Football Club Bassin d'Arcachon</option>
+                <option value="12">Andernos Sport Football Club</option>
+                </select><br/>
+            </p>
                     <p><input type="email" name="mail" placeholder="Email" required></p>
                     <p><input type="password" name="mdp" placeholder="Mot de passe" required></p>
                     <p> <input type="hidden" name="idtype" value="1"> </p>
