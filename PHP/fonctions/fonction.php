@@ -237,6 +237,10 @@ function logToDisk($page,$pseudo,$mdp)
   return $filename;
 }
 
+
+ 
+
+
 /**
  * Retourne une adresse IP
  *

@@ -53,3 +53,10 @@ Vous pouvez maintenant accéder à index.php soit l'accueil de FREDI.
 Une fois connecté chaque fois que vous allez sur une page une trace est enregistrée dans le fichier ``htaccess/log.txt``.
 
 
+### 5.JSON
+
+Pour récupérer les note de frais:<br>
+[...]/frais_JSON.php?email=<EMAIL_UTILISATEUR>&password=<MOT_DE_PASSE><br>
+<br>
+Exemple:<br>
+[...]/frais_JSON.php?email=adherent@m2l.com&password=Adherent31!
