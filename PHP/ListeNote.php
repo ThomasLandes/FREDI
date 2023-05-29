@@ -88,17 +88,7 @@ header("Location: ListeNote.php");
 
 ?>
 <?php
-if($util == CONTROLER){
-$sql_actif = "UPDATE periodef SET is_actif = 0 ;
-                UPDATE periodef SET is_actif = 1 WHERE libelleperiode = ".$periode;  
-try {
-  $sth = $dbh->prepare($sql_actif);
-  $sth->execute($params); 
-} catch (PDOException $e) {
-  die("<p>Erreur lors de la requête SQL : " . $e->getMessage() . "</p>");
-}
 
-}
 
 
 try {
@@ -130,37 +120,53 @@ try {
     if( $util == DEFAULT_USER){
     echo '<tr><th>Ordre</th><th>Montant</th><th>Date</th><th>Voir ligne frais</th>';
     }
-    if ($util == CONTROLER ) {
-      echo "<div style='padding: 15px;''>";
+
+    if ($util == CONTROLER) {
+      echo "<div style='padding: 15px;'>";
       echo "<h1>Liste des periodes</h1>";
       echo "<table>";
-echo "<tr><th>libellé periode</th><th>Montant</th></tr>";
-foreach($periodefs as $periodef){
-  echo "<tr>";
-  echo "<td>".$periodef['libelleperiode']."</td>";
-  echo "<td>".$periodef['montant']."</td></tr>";
-}
- echo "</table>";
-
-?>
-<br><br>
-<libel for="periode">Choix periode active</label><br><br>
-<form>
-<select style="float: left;" name="periode" id="periode" onchange="this.form.submit()">
-<?php
-
-  foreach (range('2019', '2023') as $char) {
-    if ($char == $periode) {
-      $selected = "selected";
-    } else {
-      $selected = "";
+      echo "<tr><th>libellé periode</th><th>Montant</th></tr>";
+      foreach ($periodefs as $periodef) {
+        echo "<tr>";
+        echo "<td>".$periodef['libelleperiode']."</td>";
+        echo "<td>".$periodef['montant']."</td></tr>";
+      }
+      echo "</table>";
+      ?>
+      <br><br>
+      <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+        <label for="periode">Choix periode active:</label>
+        <select name="periode" id="periode">
+          <?php
+          foreach ($periodefs as $periodef) {
+            echo '<option value="'.$periodef['libelleperiode'].'">'.$periodef['libelleperiode'].'</option>';
+          }
+          ?>
+        </select>
+        <input type="submit" name="update_periode" value="Changer la periode active">
+      </form>
+      <?php
     }
-    echo '<option value="' . $char . '" ' . $selected . ' >' . $char . '</option>' . PHP_EOL;
-  }
+
+
+    if (isset($_POST['update_periode'])) {
+      $selectedPeriode = $_POST['periode'];
+      $sql_actif = "UPDATE periodef SET is_actif = 0;
+                    UPDATE periodef SET is_actif = 1 WHERE libelleperiode = :libelleperiode";
+      $params = array(
+        ":libelleperiode" => $selectedPeriode
+      );
+      try {
+        $sth = $dbh->prepare($sql_actif);
+        $sth->execute($params);
+        echo "La periode active a été mise à jour !";
+      } catch (PDOException $e) {
+        die("<p>Erreur lors de la requête SQL : " . $e->getMessage() . "</p>");
+      }
     }
+ 
 ?>
-</select>
-</form><br><br>
+
 
 <h1>Liste des notes</h1><br>
 <?php
